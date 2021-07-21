@@ -1,0 +1,44 @@
+{% load static %}
+{% include 'User/head.html' %}
+
+
+<div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <!-- OVERVIEW -->
+            <div class="panel panel-headline">
+                <div class="panel-body">
+                    <h3 class="text-center">SEND MAIL TO ANYONE WITHIn YOUR ORGANIZATION</h3>
+                    <hr>
+
+					<form method = "post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="customer">To :</label>
+                            <select class="form-control form-control-lg" name="to" id="to">
+                                {% for da in maillist %}
+                                    <option value="{{ da.email }}">{{ da.email }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer">Subject : </label>
+                            <input type="text" class="form-control" name="subject" id="subject" placeholder="subject">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="customer">Message</label>
+                            <textarea class="form-control " name="message" id="message" placeholder="message" rows="8"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-sm">Send Mail</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                    {% include 'User/foot2.html' %}

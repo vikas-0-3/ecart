@@ -13,6 +13,9 @@ date = datetime.date.today()
 
 from django.contrib.auth.models import User
 
+#email 
+from django.conf import settings
+from django.core.mail import send_mail
 
 
 
@@ -88,6 +91,27 @@ def home(request):
     context["logsdata"] = Logs.objects.all().order_by('-id')[:10]
 
     return render(request, "User/index.html", context)
+
+
+@login_required(login_url='login')
+def email(request):
+    context = {}
+
+    context["maillist"] = User.objects.all()
+
+    if request.method == 'POST':
+        to = request.POST.get('to')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+        
+    
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = [to, ]
+        send_mail( subject, message, email_from, recipient_list )
+
+    
+    return render(request, "User/email/email.html", context)
+
 
 
 @login_required(login_url='login')
