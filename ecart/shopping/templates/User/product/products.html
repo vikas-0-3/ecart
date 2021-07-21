@@ -1,0 +1,73 @@
+{% load static %}
+{% include 'User/head.html' %}
+		<!-- MAIN -->
+		<div class="main">
+			<!-- MAIN CONTENT -->
+			<div class="main-content">
+				<div class="container-fluid">
+					<h3 class="page-title"><b>Products</b></h3>
+			
+					<div class="panel panel-headline">
+						<div class="panel-body">
+							<div class="col text-right mb-2">
+								<a href="addproduct" class="btn btn-light" ><i class="lnr lnr-plus-circle"></i></a>
+							</div>
+							<div class="table-responsive">
+								<table id="example" class="display nowrap" style="width:100%">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Image</th>
+											<th>Product name</th>
+											<th>Product Category</th>
+											<th>Product Price</th>
+											<th>Product Manufacturer</th>
+											<th>Product Expiry</th>
+											<th>Product Code</th>
+											<th>Addedd by</th>
+											<th>Manufacture Contact</th>
+											<th>Manufacture Email</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for da in data %}
+										<tr>
+											<td>{{ da.id }}</td>
+											<td><img src="media/{{ da.product_image }}" height="50" width="50" ></td>
+											<td>{{ da.product_name }}</td>
+											<td>{{ da.product_category }}</td>
+											<td>{{ da.product_price }}</td>
+											<td>{{ da.product_manufacture }}</td>
+											<td>{{ da.expirydate }}</td>
+											<td>{{ da.product_code }}</td>
+											<td>{{ da.addedby }}</td>
+											<td>{{ da.query_contact }}</td>
+											<td>{{ da.query_email }}</td>
+											<td>
+												<a class="link" href="editproduct/{{ da.id }}">
+													<span class="lnr lnr-pencil text-success"></span>
+												</a>
+												<a class="link" onclick="return confirm('Are you sure you want to delete this Product ?');" href="deleteproduct/{{ da.id }}">
+													<span class="lnr lnr-trash text-danger"></span>
+												</a>
+											</td>
+										</tr>
+										{% endfor %}
+
+										
+
+									</tbody>
+								</table>
+							</div>
+						
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END MAIN CONTENT -->
+		</div>
+
+
+{% include 'User/foot2.html' %}

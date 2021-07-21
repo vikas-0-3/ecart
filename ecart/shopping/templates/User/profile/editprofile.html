@@ -1,0 +1,180 @@
+{% load static %}
+{% include 'User/head.html' %}
+
+
+
+<div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <h3 class="page-title">Update Profile</h3>
+         
+            <form method = "post" enctype="multipart/form-data">
+                {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+       
+                    <!-- INPUTS -->
+                    <input type="hidden" name="userid" value="{{ request.user.id }}">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Basic Info</h3>
+                        </div>
+                        <div class="panel-body">
+                            <label for="user_image">User Image</label>
+                            <input type="file" class="form-control" name="user_image" >
+                            <br>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <label for="first_name">First Name</label>
+                                    <input type="text" class="form-control" name="first_name" value="{{ data.first_name.value }}" placeholder="First Name">
+                                </div>
+                                <div class="col-sm">
+                                    <label for="last_name">Last Name</label>
+                                    <input type="text" class="form-control" name="last_name" value="{{ data.last_name.value }}" placeholder="Last Name">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <label for="user_email">Email</label>
+                                    <input type="email" class="form-control" name="user_email" value="{{ data.user_email.value }}" placeholder="Email">
+                                </div>
+                                <div class="col-sm">
+                                    <label for="user_phone">Phone</label>
+                                    <input type="phone" class="form-control" name="user_phone" id="user_phone"  value="{{ data.user_phone.value }}" placeholder="Phone">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <label for="dob">Date of Birth</label>
+                                    <input type="date" class="form-control" name="dob" id="dob">
+                                </div>
+                                <div class="col-sm">
+                                    <label for="gender">Gender</label>
+                                    <select class="form-control form-control-lg" name="gender">
+                                        <option value="Male" {% if data.gender.value == "Male" %} selected {% endif %} >Male</option>
+                                        <option value="Female" {% if data.gender.value == "Female" %} selected {% endif %}>Female</option>
+                                    </select>
+                                </div>
+                            </div>
+
+         
+                            <br>
+                            <label for="id_proof">ID Proof</label>
+                            <input type="file" class="form-control" name="id_proof" >
+                            <br>
+                            <label for="address">Address </label>
+                            <textarea type="text" class="form-control" name="address" value="{{ data.address.value }}" placeholder="Address" rows="4">{{ data.address.value }}</textarea>
+                            
+                         
+                        </div>
+                    </div>
+                    <!-- END INPUTS -->
+        
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Office</h3>
+                        </div>
+                        <div class="panel-body">
+                        
+                            <div class="row">
+                                <div class="col-sm">
+                                    <label for="points">Points</label>
+                                    <input type="number" class="form-control" name="points" value="{{ data.points.value }}" placeholder="Points" {% if request.user.is_staff == "0" %} readonly {% endif %}>
+                                </div>
+                                <div class="col-sm">
+                                    <label for="designation">Designation</label>
+                                    <input type="text" class="form-control" name="designation" value="{{ data.designation.value }}" placeholder="Designation" {% if request.user.is_staff == "0" %} readonly {% endif %}>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm">
+                                    <label for="working_from">Working From</label>
+                                    <input type="time" class="form-control" name="working_from" id="working_from" {% if request.user.is_staff == "0" %} readonly {% endif %}>
+                                </div>
+                                <div class="col-sm">
+                                    <label for="working_to">Working To</label>
+                                    <input type="time" class="form-control" name="working_to" id="working_to" value="{{ data.working_to.value }}" placeholder="Designation" {% if request.user.is_staff == "0" %} readonly {% endif %}>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+
+                    <!-- ALERT MESSAGES -->
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Social Links</h3>
+                        </div>
+                        <div class="panel-body">
+                            <label for="facebook">Facebook</label>
+                            <input type="text" class="form-control" name="facebook" placeholder="Facebook url" value="{{ data.facebook.value }}" >
+                            <br>
+                            <label for="instagram">Instagram</label>
+                            <input type="text" class="form-control" name="instagram" placeholder="Instagram url" value="{{ data.instagram.value }}" >
+                            <br>
+                            <label for="linkedin">Linked In</label>
+                            <input type="text" class="form-control" name="linkedin" placeholder="Linked in url" value="{{ data.linkedin.value }}" >
+                            <br>
+                            <label for="github">Github</label>
+                            <input type="text" class="form-control" name="github" placeholder="Github url" value="{{ data.github.value }}" >
+                            <br>
+                        </div>
+                    </div>
+                    <!-- END social panel -->
+
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Describe Yourself</h3>
+                        </div>
+                        <div class="panel-body">
+                            <label for="about">About </label>
+                            <textarea type="text" class="form-control" name="about" placeholder="Describe Yourself" rows="4">{{ data.about.value }}</textarea>
+                        </div>
+                  
+                        <div class="row justify-content-end mr-2 p-2">
+                            <button type="submit" class="btn btn-secondary m-1 mr-4">SAVE</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    <!-- END MAIN CONTENT -->  
+</div>
+
+<script>
+
+function returntime(time, str) {
+        var time2 = time.replace(/[&\/\\ .apm]/g,'');
+        var fields = time2.split(':');
+        if(time2.length > 1) {
+            var mytime = zeroPad(fields[0], 2)+":"+zeroPad(fields[1], 2);
+        }
+        else {
+            var mytime = zeroPad(fields[0], 2)+":00";
+        }
+        document.getElementById(str).defaultValue = mytime;
+        
+
+    }
+	function zeroPad(num, places) {
+        var zero = places - num.toString().length + 1;
+        return Array(+(zero > 0 && zero)).join("0") + num;
+    }
+
+    returntime("{{ data.working_from.value }}", "working_from")
+    returntime("{{ data.working_to.value }}", "working_to")
+
+    dateformatvalue("{{ data.dob.value }}", "dob");
+</script>
+
+{% include 'User/foot2.html' %}

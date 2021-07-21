@@ -1,0 +1,157 @@
+{% load static %}
+{% include 'User/head.html' %}
+
+
+<div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid card" style="background-color: white;">
+            <h3 class="bg-light p-2">Edit Sale</h3>
+
+            <div class="card">
+                <div class="container-fluid">
+                    <form method = "post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                    <div class="row">
+                    
+                        <div class="col-sm">
+                            <h5>Contact Details</h5>
+                            <hr>
+                            <input type="hidden" name="addedby" value="{{ request.user.id }}">
+                                <div class="form-group">
+                                    <label for="customer">Customer</label>
+
+                                    <select class="form-control form-control-lg" name="customer" id="customer">
+                                        {% for da in customersdata %}
+                                            <option value="{{ da.id }}" {% if da.id == data.customer.value %}selected{% endif %}>{{ da.full_name }} - {{ da.company_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <label for="product">Product</label>
+                                              <select class="form-control form-control-lg" name="product" id="product" onselect="myFunction()">
+                                                  {% for daa in productdata %}
+                                                      <option value="{{ daa.id }}" foo="{{ daa.product_price }}" {% if daa.id == data.product.value %}selected{% endif %}>{{ daa.product_name }}</option>
+                                                  {% endfor %}
+                                              </select>
+                                          </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <label for="product_price">Product Price</label>
+                                            <input type="number" class="form-control" name="product_price" value="{{ data.product_price.value }}" id="product_price" placeholder="Product Price" >
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <label for="quantity">Quantity</label>
+                                            <input type="number" class="form-control" name="quantity" value="{{ data.quantity.value }}" id="quantity" placeholder="Quantity" oninput="calctotal(this.value)">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <label for="total">Total</label>
+                                            <input type="text" class="form-control" value="{{ data.total.value }}" name="total" id="total" placeholder="Total" >
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <label for="gst">GST</label>
+                                            <input type="text" class="form-control" name="gst" value="{{ data.gst.value }}" id="gst" placeholder="GST (in %)" oninput="calcgttl(this.value)">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <label for="discount">Discount</label>
+                                            <input type="text" class="form-control" name="discount" value="{{ data.discount.value }}" id="discount" placeholder="Discount" oninput="reddis(this.value)">
+                                        </div>
+                                    </div>
+                                </div>
+                                  
+                                
+                                <div class="form-group">
+                                    <label for="grand_total">Grand Total</label>
+                                    <input type="number" class="form-control" name="grand_total" value="{{ data.grand_total.value }}" id="grand_total" placeholder="Grand Total">
+                                </div>
+                                <div class="form-group">
+                                    <label for="deliveryboy">DeliveryBoy</label>
+                                    <select class="form-control form-control-lg" name="deliveryboy" id="deliveryboy">
+                                        {% for da2 in deliveryboydata %}
+                                            <option value="{{ da2.id }}" {% if da2.id == data.deliveryboy.value %}selected{% endif %}>{{ da2.full_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <label for="order_date">Order Date</label>
+                                            <input type="date" class="form-control" name="order_date" id="order_date" >
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <label for="delivery_date">Delivery Date</label>
+                                            <input type="date" class="form-control" name="delivery_date" id="delivery_date" >
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                           
+                                
+                                
+                                
+                        </div>
+                    
+                    
+                    </div>
+                    <div class="row justify-content-end">
+                        <button type="submit" class="btn btn-secondary m-1">SAVE</button>
+                        <button type="button" class="btn btn-secondary m-1">SAVE AND CREATE CONTACT</button>
+                    </div>
+                    <br>
+                </form>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    var x = document.getElementById("product").options[product.options.selectedIndex].getAttribute('foo');
+    document.getElementById("product_price").value = x;
+
+function myFunction() {
+    var x = document.getElementById("product").options[product.options.selectedIndex].getAttribute('foo');
+    document.getElementById("product_price").value = x;
+
+}
+
+function calctotal(q) {
+    document.getElementById("total").value =  document.getElementById("product_price").value * q;
+}
+
+function calcgttl(g) {
+    document.getElementById("grand_total").value = parseInt(document.getElementById("total").value) + parseInt(g*(document.getElementById("total").value/100));
+}
+function reddis(d) {
+    document.getElementById("grand_total").value = parseInt(document.getElementById("total").value) + parseInt(parseInt(document.getElementById("grand_total").value)*parseInt(document.getElementById("total").value/100)) - d;
+}
+
+
+</script>
+<script>
+    dateformatvalue("{{ data.order_date.value }}", "order_date");
+    dateformatvalue("{{ data.delivery_date.value }}", "delivery_date");
+</script>
+
+{% include 'User/foot2.html' %}

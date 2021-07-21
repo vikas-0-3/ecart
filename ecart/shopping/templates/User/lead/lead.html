@@ -1,0 +1,69 @@
+{% load static %}
+{% include 'User/head.html' %}
+		<!-- MAIN -->
+		<div class="main">
+			<!-- MAIN CONTENT -->
+			<div class="main-content">
+				<div class="container-fluid">
+					<h3 class="page-title"><b>Leads</b></h3>
+					<div id="toastr-demo" class="panel">
+						<div class="panel-body">
+							<div class="col text-right mb-2">
+								<a href="addlead" class="btn btn-light" ><i class="lnr lnr-plus-circle"></i></a>
+							</div>
+
+							<div class="table-responsive">
+								<table id="example" class="display nowrap" style="width:100%">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Title</th>
+											<th>Company name</th>
+											<th>Contact Person</th>
+											<th>Person Phone</th>
+											<th>Person Email</th>
+											<th>Assigned</th>
+											<th>Status</th>
+											<th>Source</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for da in data %}
+										<tr>
+											<td>{{ da.id }} </td>
+											<td>{{ da.title }}</td>
+											<td>{{ da.company_name }}</td>
+											<td>{{ da.contact_person }}</td>
+											<td>{{ da.phone }}</td>
+											<td>{{ da.email }}</td>
+											<td>{{ da.assigned_to }}</td>
+											<td>{{ da.status }}</td>
+											<td>{{ da.source }}</td>
+											<td>											
+												<a class="link" href="editlead/{{ da.id }}">
+													<span class="lnr lnr-pencil text-success"></span>		
+												</a>
+												<a class="link" onclick="return confirm('Are you sure you want to delete this Lead ?');" href="deletelead/{{ da.id }}">
+													<span class="lnr lnr-trash text-danger"></span>
+												</a>
+											</td>
+										</tr>
+
+										{% endfor %}
+
+									</tbody>
+								</table>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END MAIN CONTENT -->
+		</div>
+
+
+
+		{% include 'User/foot2.html' %}

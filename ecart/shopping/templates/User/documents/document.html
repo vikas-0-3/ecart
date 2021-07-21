@@ -1,0 +1,109 @@
+{% load static %}
+{% include 'User/head.html' %}
+		<!-- END LEFT SIDEBAR -->
+		<!-- MAIN -->
+		<div class="main">
+			<!-- MAIN CONTENT -->
+			<div class="main-content">
+				<div class="container-fluid">
+					<h3 class="page-title"><b>Documents</b></h3>
+					<div id="toastr-demo" class="panel">
+						<div class="panel-body">
+							<div class="col text-right mb-2">
+								<a type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModal" ><i class="lnr lnr-plus-circle"></i></a>
+
+
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="exampleModalLabel">Upload Documents</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form method = "post" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="addedby" value="{{ request.user.id }}">
+                                                <div class="form-group">
+                                                    <label for="title">Title</label>
+                                                    <input type="text" class="form-control" name="title" id="title" placeholder="Title">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="document">Upload Files</label>
+                                                    <input type="file" class="form-control dropify" name="document" id="document" placeholder="" multiple required>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Upload</button>
+                                                </div>
+
+                                            </form>
+
+
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+
+							</div>
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- TIMELINE -->
+                                    <div class="panel" style="height: 40vh; overflow-y: scroll;">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Documents List</h3>
+                                        </div>
+                                        <div class="panel-body">
+
+                                            <table class="table table-striped" id="example" >
+                                                <thead>
+                                                    <tr>
+                                                        <th>No.</th>
+                                                        <th>Added By</th>
+                                                        <th>Title</th>
+                                                        <th>File</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for da in data %}
+                                                    <tr>
+                                                        <td>{{ da.id }}</td>
+                                                        <td>{{ da.addedby }}</td>
+                                                        <td>{{ da.title }}</td>
+                                                        <td><a href="media/{{ da.document }}" target="myIframe">{{ da.document }}</a></td>
+                                                        <td>Edit / Delete</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+
+
+                                         
+                                        </div>
+                                    </div>
+                                    <!-- END TIMELINE -->
+                                </div>
+                            </div>
+
+
+
+                            <iframe id="myIframe" name="myIframe" src="" style="width:100%; height:80vh;" frameborder="1" allow-same-origin></iframe>
+
+					
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END MAIN CONTENT -->
+		</div>
+
+
+		{% include 'User/foot2.html' %}

@@ -1,0 +1,203 @@
+{% load static %}
+{% include 'User/head.html' %}
+
+		<!-- MAIN -->
+		<div class="main">
+			<!-- MAIN CONTENT -->
+			<div class="main-content">
+				<div class="container-fluid">
+					<h3 class="page-title"><b>Tasks</b></h3>
+					<div class="panel panel-headline demo-icons">
+						<div class="panel-heading text-right mb-2">
+							<a href="addtask" class="btn btn-light" ><i class="lnr lnr-plus-circle"></i></a>
+						</div>
+						<div class="panel-body ">
+
+							<div class="table-responsive">
+							<table id="example" class="display nowrap" style="width: 100%;">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>File</th>
+										<th>Title</th>
+										<th>Subject</th>
+										<th>Related to</th>
+										<th>Deadline</th>
+										<th>Status</th>
+										<th>Description</th>
+										<th>Added by</th>
+										<th>Created at</th>
+										<th>Updated at</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+									{% for da in data %}
+									<tr>
+										<td>{{ da.id }}</td>
+										{% if da.attachment %}
+											<td><a href="media/{{ da.attachment }}" download>Attachment</a></td>
+										{% else %}
+											<td><label>No Attachment</label></td>
+										{% endif %}
+										<td>{{ da.title }}</td>
+										<td>{{ da.subject }}</td>
+										<td>{{ da.related_to }}</td>
+										<td>{{ da.deadline }}</td>
+										
+										{% if da.status == "Active" %}
+										<td><span class="label label-warning">{{ da.status }}</span></td>
+										{% elif da.status == "Completed" %}
+										<td><span class="label label-success">{{ da.status }}</span></td>
+										{% elif da.status == "Pending" %}
+										<td><span class="label label-danger">{{ da.status }}</span></td>
+										{% else %}
+										<td><span class="label label-primary">{{ da.status }}</span></td>
+										{% endif %}
+										
+										<td>{{ da.description }}</td>
+										<td>{{ da.addedby }}</td>
+										<td>{{ da.created_at }}</td>
+										<td>{{ da.updated_at }}</td>
+										<td>											
+											<a class="link" href="edittask/{{ da.id }}">
+												<span class="lnr lnr-pencil text-success"></span>		
+											</a>
+											<a class="link" href="deletetask/{{ da.id }}">
+												<span class="lnr lnr-trash text-danger"></span>
+											</a>
+										</td>
+									</tr>
+									{% endfor %}
+									
+								</tbody>
+							</table>
+							</div>
+
+						</div>
+					</div>
+
+
+
+
+
+					<div class="panel panel-headline demo-icons">
+						<div class="panel-heading">
+							<h3 class="panel-title text-center"><b>Task Statistics</b>  </h3>
+							<hr>
+						</div>
+						<div class="panel-body">
+							
+
+							<div class="row">
+								<div class="col-md-6">
+									<!-- TASKS -->
+									<div class="panel">
+										<div class="panel-heading">
+											<h3 class="panel-title">Total Tasks </h3>
+											<hr>
+										</div>
+										<div class="panel-body">
+											<ul class="list-unstyled task-list">
+												<li>
+													<p>Active Task <span class="label-percent">{{ activecount }}%</span></p>
+													<div class="progress progress-xs">
+														<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{ activecount }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ activecount }}%">
+															<span class="sr-only">{{ activecount }}% </span>
+														</div>
+													</div>
+												</li>
+												<li>
+													<p>Inactive Task <span class="label-percent">{{ inactivecount }}%</span></p>
+													<div class="progress progress-xs">
+														<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="{{ inactivecount }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ inactivecount }}%">
+															<span class="sr-only">{{ inactivecount }}% </span>
+														</div>
+													</div>
+												</li>
+												<li>
+													<p>Completed Task <span class="label-percent">{{ completecount }}%</span></p>
+													<div class="progress progress-xs">
+														<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{ completecount }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ completecount }}%">
+															<span class="sr-only">{{ completecount }} %</span>
+														</div>
+													</div>
+												</li>
+												<li>
+													<p>Pending Task <span class="label-percent">{{ pendingcount }}%</span></p>
+													<div class="progress progress-xs">
+														<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{ pendingcount }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ pendingcount }}%">
+															<span class="sr-only">{{ pendingcount }}%</span>
+														</div>
+													</div>
+												</li>
+												
+											</ul>
+										</div>
+									</div>
+									<!-- END TASKS -->
+								</div>
+							
+								<div class="col-md-6">
+									<!-- REALTIME CHART -->
+									<div class="panel">
+										<div class="panel-heading">
+											<h3 class="panel-title">Task Completion Ratio</h3>
+											<hr>
+										</div>
+										<div class="panel-body">
+											<div id="system-load" class="easy-pie-chart" data-percent="70">
+												<span class="percent">70</span>
+											</div>
+											<h4>Statistics</h4>
+											<div class="card">
+												<ul class="list-group list-justify">
+													<li class="list-group-item m-0">This Week: <span>( {{ curretweek }} / {{ curretweektotal }} ) &emsp; {{ currentweekpercentage }}%</span></li>
+													<li class="list-group-item m-0">Last Week: <span>( {{ pastweek }} / {{ pastweektotal }} ) &emsp; {{ pastweekpercentage }}%</span></li>
+													<li class="list-group-item m-0">This Month: <span>({{ currentmonth }} / {{ currentmonthtotal }}) &emsp; {{ currentmonthpercentage }}%</span></li>
+													<li class="list-group-item m-0">Last Month: <span>({{ pastmonth }} / {{ pastmonthtotal }}) &emsp; {{ pastmonthpercentage }}%</span></li>
+													<li class="list-group-item m-0">This Year:&emsp; <span>({{ currentyear }} / {{ currentyeartotal }}) &emsp; {{ currentyearpercentage }}%</span></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<!-- END REALTIME CHART -->
+								</div>
+							</div>
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END MAIN CONTENT -->
+		</div>
+
+
+
+
+		<script>
+			$(function() {
+				var data, options;
+		
+				var sysLoad = $('#system-load').easyPieChart({
+					size: 120,
+					barColor: function(percent) {
+						return "rgb(" + Math.round(200 * percent / 100) + ", " + Math.round(200 * (1.1 - percent / 100)) + ", 0)";
+					},
+					trackColor: 'rgba(245, 245, 245, 0.8)',
+					scaleColor: false,
+					lineWidth: 5,
+					lineCap: "square",
+					animate: 800
+				});
+				var a = "{{ completecount }}";
+				sysLoad.data('easyPieChart').update(a);
+				sysLoad.find('.percent').text(a);		
+			});
+			</script>
+
+
+		{% include 'User/foot2.html' %}

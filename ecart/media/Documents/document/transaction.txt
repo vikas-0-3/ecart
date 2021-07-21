@@ -1,0 +1,7 @@
+home  = 6
+
+status 1 -> accept (click order stattus = 2)
+2 -> complete  (click o.s 4) (customer or merchant notification) (booking confirm) ,(inv no)
+
+
+assign driver = > (type, response = 6)

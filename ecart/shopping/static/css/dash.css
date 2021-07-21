@@ -1,0 +1,17 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+ul li a {
+    font-size: large;
+    font-weight: bold;
+    color: black;
+}
+
+.vertical-center {
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */ /* These two lines are counted as one :-)       */
+  
+    display: flex;
+    align-items: center;
+}

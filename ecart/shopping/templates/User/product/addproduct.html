@@ -1,0 +1,137 @@
+{% load static %}
+{% include 'User/head.html' %}
+
+
+<div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid card" style="background-color: white;">
+            <h3 class="bg-light p-2">Add Product</h3>
+                <div class="container-fluid">
+                    <form method = "post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                    <div class="row">
+                    
+                        <div class="col-sm">
+                            <h5>Product Details</h5>
+                            
+                            <hr>
+                            <input type="hidden" name="addedby" value="{{ request.user.id }}">
+                                <div class="form-group">
+                                    <label for="productimage">Product Image</label>
+                                    <input type="file" class="form-control dropify" name="product_image" id="productimage" placeholder="Company Name">
+                                </div>
+                                <div class="form-group">
+                                  <label for="product_name">Product Name</label>
+                                  <input type="text" class="form-control" name="product_name" id="companyname" placeholder="Product Name">
+                                </div>
+                                <div class="form-group">
+                                  <label for="productcategory">Product Category</label>
+                                  <select class="form-control form-control-lg" name="product_category">
+                                        <option value="Food">Food</option>
+                                        <option value="Software">Software</option>
+                                        <option value="Hardware">Hardware</option>
+                                        <option value="Transport">Transport</option>
+                                        <option value="Clothes">Clothes</option>
+                                        <option value="Others">Others</option>
+                                    </select>
+                                </div>
+                                <label for="email">Product Dimensions</label>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" name="height" id="height" placeholder="Height (in cm)">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" name="width" id="width" placeholder="Width (in cm)">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="product_weight">Product Weight</label>
+                                    <input type="number" class="form-control" name="product_weight"  id="product_weight" placeholder="Weight (in kg)">
+                                </div>
+                                <div class="form-group">
+                                    <label for="product_color">Product Color</label>
+                                    <input type="text" class="form-control" name="product_color" id="product_color" placeholder="Product Color">
+                                </div>
+                                <div class="form-group">
+                                    <label for="product_description">Product Description</label>
+                                    <input type="text" class="form-control" name="product_description" id="product_description" placeholder="Product Description">
+                                </div>
+                                <div class="form-group">
+                                    <label for="product_price">Product Price</label>
+                                    <input type="number" class="form-control" name="product_price" id="product_price" placeholder="Product Price (&#8377;)">
+                                </div>
+                                
+                                
+                                
+                        </div>
+                        <div class="col-sm">
+                            <h5>Manufacture Details</h5>
+                            <hr>
+                                <div class="form-group">
+                                  <label for="manufacture">Product Manufacturer</label>
+                                  <input type="text" class="form-control" name="product_manufacture" id="product_manufacture" placeholder="Product Manufacturer">
+                                </div>
+                                <div class="form-group">
+                                  <label for="expirydate">Product Expiry</label>
+                                  <input type="date" class="form-control" name="expirydate" id="expirydate" placeholder="Expiry">
+                                </div>
+                                <div class="form-group">
+                                    <label for="manufacture_price">Manufacture Price</label>
+                                    <input type="number" class="form-control" name="manufacture_price" id="manufacture_price" placeholder="Manufacture Price (&#8377;)">
+                                </div> 
+                                <div class="form-group">
+                                    <label for="product_code">Product Code</label>
+                                    <input type="text" class="form-control" name="product_code" id="product_code" placeholder="Product Code">
+                                </div>       
+                                <br>
+                                <h5 class="">Gurantee Details</h5>
+                                <hr>
+                                <div class="row" style="margin-top:-15px;">
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <label for="product_warranty">Product Warranty</label>
+                                            <input type="number" class="form-control" name="product_warranty" id="product_warranty" placeholder="Product Warranty (in months)">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="query_contact">Product Query Contact</label>
+                                            <input type="number" class="form-control" name="query_contact" id="query_contact" placeholder="Product Query Contact">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <label for="product_gurantee">Product Gurntee</label>
+                                            <input type="number" class="form-control" name="product_gurantee" id="product_gurantee" placeholder="Product Gurantee (in months)">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="query_email">Product Query Email</label>
+                                            <input type="email" class="form-control" name="query_email" id="query_email" placeholder="Product Query Email">
+                                        </div>
+                                    </div>
+                                </div>
+
+                        </div>
+                    
+                    </div>
+                    <div class="row justify-content-end">
+                        <button type="submit" class="btn btn-secondary m-1">SAVE</button>
+                        <button type="button" class="btn btn-secondary m-1">SAVE AND CREATE CONTACT</button>
+                    </div>
+                    <br>
+                </form>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+{% include 'User/foot2.html' %}

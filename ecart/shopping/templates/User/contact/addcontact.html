@@ -1,0 +1,72 @@
+{% load static %}
+{% include 'User/head.html' %}
+
+
+<div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid card" style="background-color: white;">
+            <h3 class="bg-light p-2">Add Contact</h3>
+            
+                <div class="container-fluid">
+                    <form method = "post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                    <div class="row">
+                    
+                        <div class="col-sm">
+                            <h5>Contact Details</h5>
+                            <hr>
+                            <input type="hidden" name="addedby" value="{{ request.user.id }}">
+                                <div class="form-group">
+                                    <label for="user_image">User Image</label>
+                                    <input type="file" class="form-control dropify" name="user_image" id="user_image" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                  <label for="full_name">Full Name</label>
+                                  <input type="text" class="form-control" name="full_name" id="full_name" placeholder="Full Name" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="user_email">Email</label>
+                                    <input type="email" class="form-control" name="user_email"  id="user_email" placeholder="User Email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="user_phone">Phone</label>
+                                    <input type="number" class="form-control" name="user_phone" id="user_phone" placeholder="User Phone">
+                                </div>
+                                <div class="form-group">
+                                    <label for="user_position">Position</label>
+                                    <input type="text" class="form-control" name="user_position" id="user_position" placeholder="User Position">
+                                </div>
+                                <div class="form-group">
+                                    <label for="company_name">Company name</label>
+                                    <input type="text" class="form-control" name="company_name" id="company_name" placeholder="Company Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="company_location">Company Location</label>
+                                    <input type="text" class="form-control" name="company_location" id="company_location" placeholder="Company Location">
+                                </div>
+                                
+                                
+                                
+                        </div>
+                    
+                    
+                    </div>
+                    <div class="row justify-content-end">
+                        <button type="submit" class="btn btn-secondary m-1">SAVE</button>
+                        <button type="button" class="btn btn-secondary m-1">SAVE AND CREATE CONTACT</button>
+                    </div>
+                    <br>
+                </form>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+{% include 'User/foot2.html' %}

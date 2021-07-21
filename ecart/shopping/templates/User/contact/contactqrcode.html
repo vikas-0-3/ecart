@@ -1,0 +1,44 @@
+{% load qr_code %}
+{% load static %}
+{% include 'User/head.html' %}
+
+
+
+<div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <!-- OVERVIEW -->
+            <div class="panel panel-headline">
+                <div class="panel-body">
+                    
+                <div class="text-center" id="myqrdiv">
+                    
+                    {% qr_from_text data size="s" image_format="png" error_correction="L" %}
+
+                </div>
+
+
+                <a href="#" id="downloadbtn" class="btn btn-sm btn-primary" download>Download</a>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("downloadbtn").href = document.getElementById("myqrdiv").firstElementChild.src;
+</script>
+
+
+
+
+
+
+
+
+
+
+{% include 'User/foot2.html' %}

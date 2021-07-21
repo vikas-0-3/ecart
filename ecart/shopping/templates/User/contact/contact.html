@@ -1,0 +1,77 @@
+{% load static %}
+{% include 'User/head.html' %}
+		<!-- END LEFT SIDEBAR -->
+		<!-- MAIN -->
+		<div class="main">
+			<!-- MAIN CONTENT -->
+			<div class="main-content">
+				<div class="container-fluid">
+					<h3 class="page-title"><b>Contacts</b></h3>
+					<div id="toastr-demo" class="panel">
+						<div class="panel-body">
+							<div class="col text-right mb-2">
+								<a href="addcontact" class="btn btn-light" ><i class="lnr lnr-plus-circle"></i></a>
+							</div>
+							<!-- CONTEXTUAL -->
+							<div class="table-responsive">
+								<table id="example" class="display nowrap" style="width:100%">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Image</th>
+											<th>Full name</th>
+											<th>Email</th>
+											<th>Phone</th>
+											<th>Position</th>
+											<th>Company name</th>
+											<th>Location</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										
+											{% for da in data %}
+											<tr>
+												<td>{{ da.id }}</td>
+												{% if da.user_image %}
+												<td><img src="media/{{ da.user_image }}" class="rounded-circle" height="40" width="40" ></td>
+												{% else %}
+												<td><img src="media/images/contact/noimage.png" class="rounded-circle" height="40" width="40" ></td>
+												{% endif %}
+												<td>{{ da.full_name }}</td>
+												<td>{{ da.user_email }}</td>
+												<td>{{ da.user_phone }}</td>
+												<td>{{ da.user_position }}</td>
+												<td>{{ da.company_name }}</td>
+												<td>{{ da.company_location }}</td>
+												<td>
+													<a class="link" href="editcontact/{{ da.id }}">
+														<span class="lnr lnr-pencil text-success"></span>		
+													</a>
+													<a class="link" onclick="return confirm('Are you sure you want to delete this Contact ?');" href="deletecontact/{{ da.id }}">
+														<span class="lnr lnr-trash text-danger"></span>
+													</a>
+
+													<a class="link" href="contactqrcode/{{ da.id }}">
+														<span class="lnr lnr-download text-primary"></span>
+													</a>
+												</td>
+											</tr>
+											{% endfor %}
+									
+										
+
+									</tbody>
+								</table>
+							</div>
+
+					
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END MAIN CONTENT -->
+		</div>
+
+
+		{% include 'User/foot2.html' %}

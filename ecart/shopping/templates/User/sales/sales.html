@@ -1,0 +1,78 @@
+{% load static %}
+{% include 'User/head.html' %}
+		<!-- MAIN -->
+		<div class="main">
+			<!-- MAIN CONTENT -->
+			<div class="main-content">
+				<div class="container-fluid">
+					<h3 class="page-title"><b>Sales</b></h3>
+			
+					<div class="panel panel-headline">
+						<div class="panel-body">
+							<div class="col text-right mb-2">
+								<a href="addsale" class="btn btn-light" ><i class="lnr lnr-plus-circle"></i></a>
+							</div>
+							<div class="table-responsive">
+								<table id="example" class="display nowrap">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Customer</th>
+											<th>Product Name</th>
+											<th>Product Price</th>
+											<th>Quantity</th>
+											<th>Total</th>
+											<th>GST</th>
+											<th>Discount</th>
+											<th>Grand Total</th>
+											<th>DeliveryBoy</th>
+											<th>Added by</th>
+											<th>Order Date</th>
+											<th>Delivery Date</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+
+									<tbody>
+
+										{% for da in data %}
+										<tr>
+											<td>{{ da.id }}</td>
+											<td>{{ da.customer.full_name }} - <i>{{ da.customer.company_name }}</i></td>
+											<td>{{ da.product.product_name }}</td>
+											<td>{{ da.product_price }}</td>
+											<td>{{ da.quantity }}</td>
+											<td>{{ da.total }}</td>
+											<td>{{ da.gst }}</td>
+											<td>{{ da.discount }}</td>
+											<td>{{ da.grand_total }}</td>
+											<td>{{ da.deliveryboy }}</td>
+											<td>{{ da.addedby }}</td>
+											<td>{{ da.order_date }}</td>
+											<td>{{ da.delivery_date }}</td>
+											<td>
+												<a class="link" href="editsale/{{ da.id }}">
+													<span class="lnr lnr-pencil text-success"></span>
+												</a>
+												<a class="link" onclick="return confirm('Are you sure you want to delete this Sale ?');" href="deletesale/{{ da.id }}">
+													<span class="lnr lnr-trash text-danger"></span>
+												</a>
+											</td>
+										</tr>
+										{% endfor %}
+
+									</tbody>
+
+								</table>
+							</div>
+
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END MAIN CONTENT -->
+		</div>
+
+
+{% include 'User/foot2.html' %}

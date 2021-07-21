@@ -1,0 +1,77 @@
+{% load static %}
+{% include 'User/head.html' %}
+
+
+<div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid card" style="background-color: white;">
+            <h3 class="bg-light p-2">Add Task</h3>
+            
+                <div class="container-fluid">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                    <div class="row">
+                    
+                        <div class="col-sm">
+                            <h5>Task Details</h5>
+                            <input type="hidden" name="addedby" value="{{ request.user.id }}">
+                            <hr>
+                                <div class="form-group">
+                                    <label for="user_image">Attach file</label>
+                                    <input type="file" class="form-control dropify" name="attachment" id="attachment" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                  <label for="full_name">Title</label>
+                                  <input type="text" class="form-control" name="title" id="title" placeholder="title" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="user_email">Subject</label>
+                                    <input type="text" class="form-control" name="subject"  id="subject" placeholder="subject">
+                                </div>
+                                <div class="form-group">
+                                    <label for="user_phone">Related to</label>
+                                    <input type="text" class="form-control" name="related_to" id="related_to" placeholder="related to">
+                                </div>
+                                <div class="form-group">
+                                    <label for="user_position">Deadline</label>
+                                    <input type="date" class="form-control" name="deadline" id="deadline" placeholder="deadline">
+                                </div>
+                                <div class="form-group">
+                                    <label for="company_name">Status</label>
+                                    <!-- <input type="text" class="form-control" name="status" id="status" placeholder="status"> -->
+                                    <select class="form-control form-control-lg" name="status" id="status">
+                                        {% for op in opt %}
+                                            <option value="{{ op }}">{{ op }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="company_location">Description</label>
+                                    <textarea type="text" class="form-control" name="description" id="description" placeholder="description" rows="4"></textarea>
+                                </div>
+                                
+                                
+                                
+                        </div>
+                    
+                    
+                    </div>
+                    <div class="row justify-content-end">
+                        <button type="submit" class="btn btn-secondary m-1">SAVE</button>
+                        <button type="button" class="btn btn-secondary m-1">SAVE AND CREATE CONTACT</button>
+                    </div>
+                    <br>
+                </form>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+{% include 'User/foot2.html' %}

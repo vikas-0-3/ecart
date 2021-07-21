@@ -1,0 +1,45 @@
+{% load static %}
+{% include 'User/head.html' %}
+
+
+<div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <!-- OVERVIEW -->
+            <div class="panel panel-headline">
+                <div class="panel-body">
+
+					{% if perms.shopping.view_logs %}
+					<div class="row">
+						<div class="col-md-12">
+							<!-- TIMELINE -->
+							<div class="panel" style="height: 77vh; overflow-y: scroll;">
+								<div class="panel-heading">
+									<h3 class="panel-title">User Activity Logs</h3>
+								</div>
+								<div class="panel-body">
+									<ul class="list-unstyled activity-list">
+
+																				
+										{% for log in logsdata %}
+										<li>
+											<img src="media/{{ log.profile_id.user_image }}" alt="Avatar" class="img-circle pull-left avatar ">
+											<p><b>{{ log.userid }}</b> {{ log.description }} <span class="timestamp">{{ log.created_at }}</span></p>
+										</li>
+										{% endfor %}
+									</ul>
+								</div>
+							</div>
+							<!-- END TIMELINE -->
+						</div>
+					</div>
+					{% else %}
+                    <p class="text-center text-danger">You don't have permission to visit this page</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                    {% include 'User/foot2.html' %}

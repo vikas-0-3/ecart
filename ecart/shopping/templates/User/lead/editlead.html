@@ -1,0 +1,106 @@
+{% load static %}
+{% include 'User/head.html' %}
+
+
+<div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid card" style="background-color: white;">
+            <h3 class="bg-light p-2">Edit Lead</h3>
+                <div class="container-fluid">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                    <div class="row">
+                    
+                        <div class="col-sm">
+                            <h5>Company Details</h5>
+                            <hr>
+                                <div class="form-group">
+                                  <label for="companyname">Company Name</label>
+                                  <input type="text" class="form-control" name="company_name" value="{{ data.company_name.value }}"  id="companyname" placeholder="Company Name">
+                                </div>
+                                <div class="form-group">
+                                  <label for="website">Website</label>
+                                  <input type="text" class="form-control" name="website" value="{{ data.website.value }}" id="website" placeholder="Website">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" name="email" value="{{ data.email.value }}" id="email" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <input type="tel" class="form-control" name="phone" value="{{ data.phone.value }}"  id="phone" placeholder="Phone">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactperson">Contact Person</label>
+                                    <input type="text" class="form-control" name="contact_person" value="{{ data.contact_person.value }}" id="contactperson" placeholder="Contact Person">
+                                </div>
+                                
+                                <h5 class="m-2">Address Details</h5>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <label for="country">Country</label>
+                                            <input type="text" class="form-control" name="country" value="{{ data.country.value }}" id="country" placeholder="Country">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="city">City</label>
+                                            <input type="text" class="form-control" name="city" value="{{ data.city.value }}" id="city" placeholder="City">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <label for="state">State</label>
+                                            <input type="text" class="form-control" name="state" value="{{ data.state.value }}" id="state" placeholder="State">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="zip">Zip</label>
+                                            <input type="number" class="form-control" name="czip" value="{{ data.czip.value }}" id="zip" placeholder="Zip">
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-sm">
+                            <h5>Lead Details</h5>
+                            <hr>
+                                <div class="form-group">
+                                  <label for="title">Title</label>
+                                  <input type="text" class="form-control" name="title" value="{{ data.title.value }}" id="title" placeholder="Title">
+                                </div>
+                                <div class="form-group">
+                                  <label for="status">Status</label>
+                                    <select class="form-control form-control-lg" name="status" id="status">
+                                    {% for op in opt %}
+                                        <option value="{{ op }}" {% if op == data.status.value %}selected{% endif %}>{{ op }}</option>
+                                    {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="source">Source</label>
+                                    <input type="text" class="form-control" name="source" value="{{ data.source.value }}" id="source" placeholder="Source">
+                                </div> 
+                                <div class="form-group">
+                                    <label for="assign">Assigned to</label>
+                                    <input type="text" class="form-control" name="assigned_to" value="{{ data.assigned_to.value }}" id="assign" placeholder="Assigned to">
+                                </div>                  
+                        </div>
+                    
+                    </div>
+                    <div class="row justify-content-end">
+                        <button type="submit" class="btn btn-secondary m-1">SAVE</button>
+                        <button type="button" class="btn btn-secondary m-1">SAVE AND CREATE CONTACT</button>
+                    </div>
+                    <br>
+                </form>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+{% include 'User/foot2.html' %}

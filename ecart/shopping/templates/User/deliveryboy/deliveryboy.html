@@ -1,0 +1,79 @@
+{% load static %}
+{% include 'User/head.html' %}
+		<!-- END LEFT SIDEBAR -->
+		<!-- MAIN -->
+		<div class="main">
+			<!-- MAIN CONTENT -->
+			<div class="main-content">
+				<div class="container-fluid">
+					<h3 class="page-title"><b>DeliveryBoy</b></h3>
+					<div id="toastr-demo" class="panel">
+						<div class="panel-body">
+							<div class="col text-right mb-2">
+								<a href="adddeliveryboy" class="btn btn-light" ><i class="lnr lnr-plus-circle"></i></a>
+							</div>
+							<!-- CONTEXTUAL -->
+							<div class="table-responsive">
+								<table id="example" class="display nowrap" style="width:100%">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Image</th>
+											<th>Full name</th>
+											<th>Email</th>
+											<th>Phone</th>
+											<th>Identity</th>
+											<th>Gender</th>
+											<th>Locality</th>
+											<th>Vehicle</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										
+											{% for da in data %}
+											<tr>
+												<td>{{ da.id }}</td>
+												{% if da.user_image %}
+												<td><img src="media/{{ da.user_image }}" class="rounded-circle" height="40" width="40" ></td>
+												{% else %}
+												<td><img src="media/images/contact/noimage.png" class="rounded-circle" height="40" width="40" ></td>
+												{% endif %}
+												<td>{{ da.full_name }}</td>
+												<td>{{ da.user_email }}</td>
+												<td>{{ da.user_phone }}</td>
+												{% if da.identity %}
+													<td><a href="media/{{ da.attachment }}" download>Attachment</a></td>
+												{% else %}
+													<td><label>No Attachment</label></td>
+												{% endif %}
+												<td>{{ da.gender }}</td>
+												<td>{{ da.locality }}</td>
+												<td>{{ da.vehicle }}</td>
+												<td>
+													<a class="link" href="editdeliveryboy/{{ da.id }}">
+														<span class="lnr lnr-pencil text-success"></span>		
+													</a>
+													<a class="link" href="deletedeliveryboy/{{ da.id }}">
+														<span class="lnr lnr-trash text-danger"></span>
+													</a>
+												</td>
+											</tr>
+											{% endfor %}
+									
+										
+
+									</tbody>
+								</table>
+							</div>
+
+					
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END MAIN CONTENT -->
+		</div>
+
+
+		{% include 'User/foot2.html' %}
