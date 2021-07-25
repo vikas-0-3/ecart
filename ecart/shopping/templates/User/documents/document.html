@@ -68,7 +68,6 @@
                                                         <th>No.</th>
                                                         <th>Added By</th>
                                                         <th>Title</th>
-                                                        <th>File</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -77,9 +76,8 @@
                                                     <tr>
                                                         <td>{{ da.id }}</td>
                                                         <td>{{ da.addedby }}</td>
-                                                        <td>{{ da.title }}</td>
-                                                        <td><a href="media/{{ da.document }}" target="myIframe">{{ da.document }}</a></td>
-                                                        <td>Edit / Delete</td>
+                                                        <td><a href="media/{{ da.document }}" target="myIframe" title="Click to open">{{ da.title }}</a></td>
+                                                        <td><a href="media/{{ da.document }}" download>Download</a> / <a href="deletedoc/{{ da.id }}">Delete</a></td>
                                                     </tr>
                                                     {% endfor %}
                                                 </tbody>
@@ -95,7 +93,7 @@
 
 
 
-                            <iframe id="myIframe" name="myIframe" src="" style="width:100%; height:80vh;" frameborder="1" allow-same-origin></iframe>
+                            <iframe id="myIframe" name="myIframe" src="" style="width:100%; height:80vh;" frameborder="1"  > </iframe>
 
 					
 						</div>

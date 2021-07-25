@@ -230,25 +230,28 @@
 									<div class="row">
 										<div class="col-sm">
 											<div class="alert ">
-												<i class="fa fa-envelope-square text-danger"></i>&emsp; <a href="#">Email</a>
+												<i class="fa fa-envelope-square text-danger"></i>&emsp; <a href="{{ socialdata.email }}" target="_blank">Email</a>
 											</div>
 											<div class="alert">
-												<i class="fa fa-phone-square text-success"></i>&emsp; <a href="#">Phone</a>
+												<i class="fa fa-phone-square text-success"></i>&emsp;
+												<a href="tel:{{ socialdata.phone }}" onclick="ga('send', 'event', { eventCategory: 'Contact', eventAction: 'Call', eventLabel: 'Mobile Button'});">Phone</a>
+
+											
 											</div>
 											<div class="alert">
-												<i class="fa fa-linkedin text-primary"></i>&emsp; <a href="#">Linked In</a>
+												<i class="fa fa-linkedin text-primary"></i>&emsp; <a href="{{ socialdata.linkedin }}" target="_blank">Linked In</a>
 											</div>
 										</div>
 										<div class="col-sm">
 											
 									<div class="alert">
-										<i class="fa fa-facebook text-primary"></i>&emsp; <a href="#">Facebook</a>
+										<i class="fa fa-facebook text-primary"></i>&emsp; <a href="{{ socialdata.facebook }}" target="_blank">Facebook</a>
 									</div>
 									<div class="alert">
-										<i class="fa fa-instagram text-danger"></i>&emsp; <a href="#">Instagram</a>
+										<i class="fa fa-instagram text-danger"></i>&emsp; <a href="{{ socialdata.instagram }}" target="_blank">Instagram</a>
 									</div>
 									<div class="alert">
-										<i class="fa fa-github text-primary"></i>&emsp; <a href="#">Github</a>
+										<i class="fa fa-github text-primary"></i>&emsp; <a href="{{ socialdata.github }}" target="_blank">Github</a>
 									</div>
 										</div>
 									</div>

@@ -26,9 +26,14 @@ urlpatterns = [
     path('calander', views.calander, name="calander"),
 
     path('documents', views.documents, name="documents"),
+    path('deletedoc/<id>', views.deletedoc, name="deletedoc"),
+
     path('knowledge', views.knowledge, name="knowledge"),
+    path('deleteknowledge/<id>', views.deleteknowledge, name="deleteknowledge"),
+    
 
     path('logs', views.logs, name="logs"),
+    path('socialhandle', views.socialhandle, name="socialhandle"),
 
 
     path('contracts', views.contracts, name="contracts"),

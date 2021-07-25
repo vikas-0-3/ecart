@@ -162,3 +162,17 @@ class Documents(models.Model):
     document = models.FileField(upload_to='Documents/document', blank=True, null=True)
     title = models.CharField(max_length=200)
     addedby = models.ForeignKey(User, on_delete=DO_NOTHING,)
+
+class Knowledge(models.Model):
+    document = models.FileField(upload_to='Documents/knowledge', blank=True, null=True)
+    title = models.CharField(max_length=200)
+    addedby = models.ForeignKey(User, on_delete=DO_NOTHING,)
+
+
+class Social(models.Model):
+    facebook = models.TextField(max_length=500, null=True, blank=True)
+    instagram = models.TextField(max_length=500, null=True, blank=True)
+    linkedin = models.TextField(max_length=500, null=True, blank=True)
+    github = models.TextField(max_length=500, null=True, blank=True)
+    email = models.TextField(max_length=500, null=True, blank=True)
+    phone = models.TextField(max_length=500, null=True, blank=True)

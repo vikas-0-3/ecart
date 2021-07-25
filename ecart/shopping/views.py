@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CreateUserForm, LeadForm, ProductForm, ContactForm, TaskForm, ContractForm, SalesForm, DeliveryboyForm, LogsForm, ProfileForm, DocumentsForm
-from .models import Lead, Product, Contact, Task, Contract, Sales, Deliveryboy, Logs, Profile, Documents
+from .forms import CreateUserForm, LeadForm, ProductForm, ContactForm, TaskForm, ContractForm, SalesForm, DeliveryboyForm, ProfileForm, SocialForm
+from .models import Lead, Product, Contact, Task, Contract, Sales, Deliveryboy, Logs, Profile, Documents, Knowledge, Social
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout, login
 
@@ -89,6 +89,7 @@ def home(request):
 
 
     context["logsdata"] = Logs.objects.all().order_by('-id')[:10]
+    context["socialdata"] = Social.objects.get(id=1)
 
     return render(request, "User/index.html", context)
 
@@ -123,28 +124,100 @@ def logs(request):
 
 
 @login_required(login_url='login')
+def socialhandle(request):
+    context = {}
+    context["socialdata"] = Social.objects.all()
+    
+    obj = get_object_or_404(Social, id = '1')
+    form = SocialForm(request.POST or None, instance = obj)
+    if form.is_valid():
+        form.save()
+        profileid = Profile.objects.get(userid_id=request.user.id)
+        user = User.objects.get(id=request.user.id)
+        obj2 = Logs(userid=user, description="Updated Social Handle", profile_id_id=profileid.id)
+        obj2.save()
+        return redirect('socialhandle')
+    else:
+        print(form.errors)
+    
+    return render(request, "User/settings/social.html", context)
+
+
+@login_required(login_url='login')
 def documents(request):
     context = {}
     context["data"] = Documents.objects.all()
     if request.method == 'POST':
-        form = DocumentsForm(request.POST, request.FILES)
-        files = request.FILES.getlist('files')
-        if form.is_valid():
-            form.save()
-            print(form)
-            profileid = Profile.objects.get(userid_id=request.user.id)
-            user = User.objects.get(id=request.user.id)
-            obj2 = Logs(userid=user, description="Added a new Document with id "+str(Documents.objects.latest('id').id), profile_id_id=profileid.id)
-            obj2.save()
-            return redirect('documents')
-        else:
-            print(form.errors)
+        doc = request.POST
+
+        title = doc['title']
+        files = request.FILES.getlist('document')
+        user = User.objects.get(id=request.user.id)
+
+        for file in files:
+            docdata = Documents.objects.create(
+                title=title,
+                addedby=user,
+                document=file,
+            )
+
+        profileid = Profile.objects.get(userid_id=request.user.id)
+        
+        obj2 = Logs(userid=user, description="Added a new Document with id "+str(Documents.objects.latest('id').id), profile_id_id=profileid.id)
+        obj2.save()
+        return redirect('documents')
     
     return render(request, "User/documents/document.html", context)
+
+
+@login_required(login_url='login')
+def deletedoc(request, id):
+    obj = get_object_or_404(Documents, id = id)
+    if request.method =="GET":
+        obj.delete()
+        profileid = Profile.objects.get(userid_id=request.user.id)
+        user = User.objects.get(id=request.user.id)
+        obj2 = Logs(userid=user, description="Deleted a Document with id "+str(id), profile_id_id=profileid.id)
+        obj2.save()
+    return redirect('documents')
+
+
+@login_required(login_url='login')
+def deleteknowledge(request, id):
+    obj = get_object_or_404(Knowledge, id = id)
+    if request.method =="GET":
+        obj.delete()
+        profileid = Profile.objects.get(userid_id=request.user.id)
+        user = User.objects.get(id=request.user.id)
+        obj2 = Logs(userid=user, description="Deleted a Knowledge base with id "+str(id), profile_id_id=profileid.id)
+        obj2.save()
+    return redirect('knowledge')
+
+    
 
 @login_required(login_url='login')
 def knowledge(request):
     context = {}
+    context["data"] = Knowledge.objects.all()
+    if request.method == 'POST':
+        doc = request.POST
+
+        title = doc['title']
+        files = request.FILES.getlist('document')
+        user = User.objects.get(id=request.user.id)
+
+        for file in files:
+            docdata = Knowledge.objects.create(
+                title=title,
+                addedby=user,
+                document=file,
+            )
+
+        profileid = Profile.objects.get(userid_id=request.user.id)
+        
+        obj2 = Logs(userid=user, description="Added new files in Knowledge base with id "+str(Documents.objects.latest('id').id), profile_id_id=profileid.id)
+        obj2.save()
+        return redirect('knowledge')
 
     
     return render(request, "User/documents/knowledge.html", context)
@@ -392,6 +465,7 @@ def addproduct(request):
             user = User.objects.get(id=request.user.id)
             obj2 = Logs(userid=user, description="Added a Product with id "+str(Product.objects.latest('id').id), profile_id_id=profileid.id)
             obj2.save()
+            request.session.error = 'Product added successfully';
             return redirect('products')
         else:
             print(form.errors)

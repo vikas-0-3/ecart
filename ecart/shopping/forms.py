@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from django.db.models import fields
-from .models import Lead, Product, Contact, Task, Contract, Sales, Deliveryboy, Logs, Profile, Documents
+from .models import Lead, Product, Contact, Social, Task, Contract, Sales, Deliveryboy, Logs, Profile, Documents, Knowledge, Social
 
 
 class CreateUserForm(UserCreationForm):
@@ -173,4 +173,26 @@ class DocumentsForm(forms.ModelForm):
             "document",
             "title",
             "addedby",
+        ]
+
+class KnowledgeForm(forms.ModelForm):
+    class Meta:
+        model = Knowledge
+        fields = [
+            "document",
+            "title",
+            "addedby",
+        ]
+
+
+class SocialForm(forms.ModelForm):
+    class Meta:
+        model = Social
+        fields = [
+            "facebook",
+            "instagram",
+            "linkedin",
+            "github",
+            "email",
+            "phone",
         ]
