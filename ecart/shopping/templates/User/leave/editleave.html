@@ -1,0 +1,66 @@
+{% load static %}
+{% include 'User/head.html' %}
+
+
+<div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid card" style="background-color: white;">
+            <h3 class="bg-light p-2">Edit Leave</h3>
+            
+                <div class="container-fluid">
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="modal-body">
+    
+                            <div class="form-group">
+                                <label for="purpose">Purpose</label>
+                                <select class="form-control form-control-lg" name="purpose" id="purpose">
+                                    <option value="Sick Leave" {% if leavedata.purpose == "Sick Leave" %}selected{% endif %} >Sick Leave</option>
+                                    <option value="Casual Leave" {% if leavedata.purpose == "Casual Leave" %}selected{% endif %} >Casual Leave</option>
+                                    <option value="Outstation Leave" {% if leavedata.purpose == "Outstation Leave" %}selected{% endif %} >Outstation Leave</option>
+                                    <option value="Maternity/Paternity Leave" {% if leavedata.purpose == "Maternity/Paternity" %}selected{% endif %} >Maternity/Paternity Leave</option>
+                                    <option value="Bereavement Leave" {% if leavedata.purpose == "Bereavement Leave" %}selected{% endif %} >Bereavement Leave</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="form-group">
+                                        <label for="from">From Date</label>
+                                        <input type="date" class="form-control" name="from_date" id="from_date" placeholder="from">
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="form-group">
+                                        <label for="to">To Date</label>
+                                        <input type="date" class="form-control" name="to_date" id="to_date" placeholder="to">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea type="text" class="form-control" name="description" id="description" placeholder="description" rows="4">{{ leavedata.description }}</textarea>
+                            </div>
+    
+                        </div>
+                        <div class="modal-footer">
+                        <button type="submit" class="btn btn-secondary">Save</button>
+                        </div>
+                    </form>
+                </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    dateformatvalue("{{ leavedata.from_date }}", "from_date");  
+    dateformatvalue("{{ leavedata.to_date }}", "to_date");  
+</script>
+
+
+
+
+{% include 'User/foot2.html' %}

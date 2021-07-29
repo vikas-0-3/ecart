@@ -1,0 +1,257 @@
+{% load static %}
+{% include 'User/head.html' %}
+
+<div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid card" style="background-color: white;">
+            <h3 class="bg-light p-2">Add Quotations</h3>
+                <div class="container-fluid">
+                    <form method = "post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                    <div class="row">
+                
+                        <div class="col-sm">
+                            <h5>Product Details</h5>
+                            <hr>
+                                <div class="form-group">
+                                    <label for="customer_name">Product</label>
+                                    <select class="form-control form-control-lg product_name" name="product_name">
+                                        <option selected>Select product</option>
+                                        {% for pro in products %}
+                                        <option value="{{pro.id}}" data-id="{{pro.id}}" data-price="{{ pro.product_price }}">{{pro.product_name}}</option>
+                                    {% endfor %}
+                                    </select>
+                                </div>
+<br>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Product Code</th>
+                                                <th>Product name</th>
+                                                <th>Product Price</th>
+                                                <th>Quantity</th>
+                                                <th>Total</th>
+                                                <th>Remove</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th><input type="text" id="gttlval" readonly value="0" /></th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>   
+                                
+                                
+                                
+
+                        </div>
+
+                        <div class="col-sm">
+                            <h5>Quotation Details</h5>
+                            
+                            <hr>
+                            <input type="hidden" name="addedby" value="{{ request.user.id }}">
+                              
+
+                                <div class="form-group">
+                                  <label for="customer_name">Customer Name</label>
+                                  <select class="form-control form-control-lg" name="customer_name">
+                                      {% for data in customers %}
+                                        <option value="{{data.full_name}} - {{ data.company_name }}">{{data.full_name}} - {{ data.company_name }}</option>
+                                    {% endfor %}
+                                    </select>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <label for="title">Title</label>
+                                            <input type="text" class="form-control" name="title" id="title" placeholder="Title">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <label for="note">Note</label>
+                                            <input type="text" class="form-control" name="note" id="note" placeholder="Note">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select class="form-control form-control-lg" name="status">
+                                        <option value="Active">Active</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Completed">Completed</option>
+                                        <option value="Rejected">Rejected</option>
+                                    </select>
+                                  </div>
+
+
+
+                                  <br>
+                                <h5>BILLING</h5>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <label for="discount">Discount</label>
+                                            <input type="number" class="form-control" name="discount" id="discount" value="0" onchange="grandtotal()" placeholder="discount (in Rs)">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <label for="shipping">Shipping Charge</label>
+                                            <input type="number" class="form-control" name="shipping" id="shipping" value="0" onchange="grandtotal()" placeholder="shipping (in Rs)">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="status">GST / TAX</label>
+                                    <select class="form-control form-control-lg" name="gst" id="gst"  onchange="grandtotal()">
+                                        <option value="0">0 %</option>
+                                        <option value="5">5 %</option>
+                                        <option value="12">12 %</option>
+                                        <option value="18">18 %</option>
+                                        <option value="28">28 %</option>
+                                    </select>
+                                </div>
+      
+
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div class="form-group">
+                                            <label for="gtotal">Grand Total</label>
+                                            <input type="number" class="form-control" name="gtotal" id="gtotal" placeholder="Grand Total" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                                
+                                
+                        </div>
+                    
+                    </div>
+                    <div class="row justify-content-end">
+                        <button type="submit" class="btn btn-secondary m-1">SAVE</button>
+                    </div>
+                    <br>
+                </form>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+$('.product_name').on('change', function() {
+    var value = this.value;
+    var text =  $(this).find(':selected').text();
+    var id = $(this).find(':selected').data('id');
+    var price = $(this).find(':selected').data('price');
+
+    var item = `<tr class="${value}"><td><input type="text" name="product_id[]" value="${value}" readonly></td>`+
+        `<td><input type="text" class="pname p-0 m-0" name="product_name[]" value="${text}" readonly></td>`+
+        `<td><input type="text" class="pprice p-0 m-0" name="product_price[]" value="${price}" readonly></td>`+
+        `<td><input type="number" class="pquantity p-0 m-0" id="qty" name="product_quantity[]" ></td>`+
+        `<td><input type="number" class="ptotal p-0 m-0" name="product_total[]" readonly></td>`+
+        `<td><button type="button" class="btn btn-sm delme" name="${text}" data-p="${price}" data-i="${value}"><span class="lnr lnr-trash text-danger"></span></button> </tr>`;
+
+    $('.table').append(item);
+    $(this).find('[value="'+value+'"]').remove();
+
+});
+
+$('table').on('click', 'button[type="button"]', function(e){
+    var d2 = $(this).data("p")
+    var d3 = $(this).data("i");
+    $('.product_name').append(`<option value="${d3}" data-id="${d3}" data-price="${d2}">${this.name}</option>`);
+
+   $(this).closest('tr').remove();
+
+    var x1 = $("#gttlval").val();
+    var t1 = parseInt(x1)-parseInt(d2);
+    $("#gttlval").val(t1)
+    grandtotal();
+});
+
+
+
+
+    (function() {
+        "use strict";
+
+        $(".table").on("change", "input", function() {
+          var row = $(this).closest("tr");
+          var qty = parseFloat(row.find(".pquantity").val());
+          var price = parseFloat(row.find(".pprice").val());
+          var total = qty * price;
+          row.find(".ptotal").val(total);
+
+          var x = $("#gttlval").val();
+          var t = parseInt(x)+parseInt(total);
+          $("#gttlval").val(t)
+          grandtotal();
+        });
+    })();
+
+
+
+
+function grandtotal() {
+    var dis = $("#discount").val();
+    var ship = $("#shipping").val();
+    var tax = $("#gst").find(':selected').val();
+    var gtt = $("#gttlval").val();
+
+    var ca = parseInt(gtt);
+    var gstttl = ((parseFloat(tax) / 100) * ca)
+    var cal = ca + gstttl + parseInt(ship) - parseInt(dis);
+
+    if(cal > 0) {
+        $("#gtotal").val(cal);
+    }
+    else {
+        $("#gtotal").val(0);
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+{% include 'User/foot2.html' %}

@@ -176,3 +176,36 @@ class Social(models.Model):
     github = models.TextField(max_length=500, null=True, blank=True)
     email = models.TextField(max_length=500, null=True, blank=True)
     phone = models.TextField(max_length=500, null=True, blank=True)
+
+
+class Quotations(models.Model):
+    customer_name = models.CharField(max_length=200)
+    title = models.CharField(max_length=200)
+    note = models.CharField(max_length=200)
+    status = models.CharField(max_length=200)
+    discount = models.IntegerField()
+    shipping = models.IntegerField()
+    tax = models.IntegerField()
+    grand_total = models.BigIntegerField()
+    addedby = models.ForeignKey(User, on_delete=DO_NOTHING,)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class Quoteitem(models.Model):
+    quotation_id = models.ForeignKey(Quotations, on_delete=models.CASCADE)
+    product_code = models.CharField(max_length=200)
+    product_name = models.CharField(max_length=250)
+    product_price = models.BigIntegerField()
+    product_quantity = models.IntegerField()
+    product_total = models.BigIntegerField()
+
+
+
+class Leave(models.Model):
+    purpose = models.CharField(max_length=200)
+    from_date = models.DateField()
+    to_date = models.DateField()
+    description = models.TextField(max_length=300)
+    status = models.CharField(max_length=100)
+    appliad_at = models.DateTimeField(auto_now_add=True)
+    addedby = models.ForeignKey(User, on_delete=models.CASCADE,)

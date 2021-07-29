@@ -1,0 +1,134 @@
+{% load static %}
+{% include 'User/head.html' %}
+
+
+		<!-- MAIN -->
+		<div class="main">
+			<!-- MAIN CONTENT -->
+			<div class="main-content">
+                <div class="container-fluid">
+					<div class="panel panel-headline">
+						<div class="panel-body">
+                            <div class="col-sm"><h3 class="page-title"><b>Quotation</b></h3></div>
+
+
+                                <div class="row">
+                                                
+                                    <div class="col-sm">
+                                        <h5>Product Details</h5>
+                                        <hr>
+                                <br>
+
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Product Code</th>
+                                                            <th>Product name</th>
+                                                            <th>Product Price</th>
+                                                            <th>Quantity</th>
+                                                            <th>Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for items in quotitems %}
+                                                        <tr>
+                                                            <th>{{ items.product_code }}</th>
+                                                            <th>{{ items.product_name }}</th>
+                                                            <th>{{ items.product_price }}</th>
+                                                            <th>{{ items.product_quantity }}</th>
+                                                            <th>{{ items.product_total }}</th>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>   
+                                            
+                                            
+                                            
+
+                                    </div>
+
+                                    <div class="col-sm">
+                                        
+                                        <h5>Quotation Details</h5>
+                                        
+                                        <hr>
+                                        
+
+                                            <div class="form-group">
+                                            <label for="customer_name">Customer Name : </label>
+                                            {{ quot.customer_name }}
+                                            </div>
+                                            
+
+                                            <div class="form-group">
+                                                <label for="title">Title : </label>
+                                                {{ quot.title }}
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="note">Note : </label>
+                                                {{ quot.note }}
+                                            </div>
+
+
+
+                                            <div class="form-group">
+                                                <label for="status">Status : </label>
+                                                {{ quot.status }}
+                                            </div>
+
+
+
+                                            <br>
+                                            <h5>BILLING</h5>
+                                            <hr>
+                                           
+
+                                            <div class="form-group">
+                                                <label for="discount">Discount : </label>
+                                                <label class="text-success">&#8377; {{ quot.discount }}</label>                                                    
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="shipping">Shipping Charge : </label>
+                                                <label class="text-warning">&#8377; {{ quot.shipping }}</label>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="status">GST / TAX : </label>
+                                                <label class="text-danger">{{ quot.tax }} %</label> 
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-sm">
+                                                    <div class="form-group">
+                                                        <label for="gtotal">Grand Total : </label>
+                                                        <label class="text-info">&#8377; {{ quot.grand_total }} </label>                                                
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            
+                                            
+                                            
+                                    </div>
+
+                                </div>
+                                                
+						
+							
+						</div>
+					</div>
+
+
+                </div>
+
+				</div>
+			</div>
+			<!-- END MAIN CONTENT -->
+		</div>
+
+
+{% include 'User/foot2.html' %}

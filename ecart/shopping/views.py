@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CreateUserForm, LeadForm, ProductForm, ContactForm, TaskForm, ContractForm, SalesForm, DeliveryboyForm, ProfileForm, SocialForm
-from .models import Lead, Product, Contact, Task, Contract, Sales, Deliveryboy, Logs, Profile, Documents, Knowledge, Social
+from .models import Lead, Product, Contact, Task, Contract, Sales, Deliveryboy, Logs, Profile, Documents, Knowledge, Social, Quoteitem, Quotations, Leave
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout, login
 
@@ -854,3 +854,156 @@ def calander(request):
     context = {}
     # context["data"] = Product.objects.all()
     return render(request, "User/calander/calander.html", context)
+
+
+
+
+
+#--------------------------------------------------------------------------
+                          # Quotations                                  
+                          # Quotations                                            
+                          # Quotations                  
+                          # Quotations                  
+#--------------------------------------------------------------------------
+
+
+@login_required(login_url='login')
+def quotation(request):
+    context = {}
+    context["data"] = Quotations.objects.all()
+    return render(request, "User/quotation/quotation.html", context)
+
+@login_required(login_url='login')
+def addquotation(request):
+    context = {}
+    context["customers"] = Contact.objects.all()
+    context["products"] = Product.objects.all()
+
+
+    if request.method == 'POST':
+
+        Quotations.objects.create(
+                customer_name = request.POST['customer_name'],
+                title = request.POST['title'],
+                note = request.POST['note'],
+                status = request.POST['status'],
+                discount = request.POST['discount'],
+                shipping = request.POST['shipping'],
+                tax = request.POST['gst'],
+                grand_total = request.POST['gtotal'],
+                addedby = User.objects.get(id=request.user.id),
+        )
+
+
+        myid = Quotations.objects.latest('id').id
+
+
+        product_code = request.POST.getlist('product_id[]')
+        product_name = request.POST.getlist('product_name[]')
+        product_price = request.POST.getlist('product_price[]')
+        product_quantity = request.POST.getlist('product_quantity[]')
+        product_total = request.POST.getlist('product_total[]')
+
+        for i in range(0, len(product_code)):
+            Quoteitem.objects.create(
+                quotation_id = Quotations.objects.get(id=myid),
+                product_code = product_code[i],
+                product_name = product_name[i],
+                product_price = product_price[i],
+                product_quantity = product_quantity[i],
+                product_total = product_total[i],
+            )
+
+
+
+        profileid = Profile.objects.get(userid_id=request.user.id)
+        user = User.objects.get(id=request.user.id)
+        obj2 = Logs(userid=user, description="Added a Quotation with id "+str(myid), profile_id_id=profileid.id)
+        obj2.save()
+
+
+  
+        return redirect('quotation')
+
+
+    return render(request, "User/quotation/addquotation.html", context)
+
+@login_required(login_url='login')
+def deletequotation(request, id):
+    obj = get_object_or_404(Quotations, id = id)
+    obj2 = get_object_or_404(Quoteitem, id = id)
+    if request.method =="GET":
+        obj.delete()
+        obj2.delete()
+        profileid = Profile.objects.get(userid_id=request.user.id)
+        user = User.objects.get(id=request.user.id)
+        obj2 = Logs(userid=user, description="Deleted a Task with id "+str(id), profile_id_id=profileid.id)
+        obj2.save()
+    return redirect('tasks')
+
+@login_required(login_url='login')
+def viewquotation(request, id):
+    context = {}
+    context["quot"] = get_object_or_404(Quotations, id=id)
+    context["quotitems"] = Quoteitem.objects.filter(quotation_id_id=id).all()
+    return render(request, "User/quotation/viewquotation.html", context)
+
+
+@login_required(login_url='login')
+def leave(request):
+    context = {}
+    context["data"] = Leave.objects.filter(addedby=request.user.id).all()
+
+    if request.method == 'POST':
+        Leave.objects.create(
+                purpose = request.POST['purpose'],
+                from_date = request.POST['from_date'],
+                to_date = request.POST['to_date'],
+                description = request.POST['description'],
+                status = "Pending",
+                addedby = User.objects.get(id=request.user.id),
+        )
+        profileid = Profile.objects.get(userid_id=request.user.id)
+        user = User.objects.get(id=request.user.id)
+        obj2 = Logs(userid=user, description="apply for a Leave ", profile_id_id=profileid.id)
+        obj2.save()
+
+
+  
+        return redirect('leave')
+
+
+    return render(request, "User/leave/leave.html", context)
+
+
+@login_required(login_url='login')
+def editleave(request, id):
+    context = {}
+    obj = get_object_or_404(Leave, id = id)
+    context["leavedata"] = obj
+    if request.method == "POST":
+        Leave.objects.filter(pk=id).update(
+            purpose=request.POST['purpose'],
+            from_date = request.POST['from_date'], 
+            to_date = request.POST['to_date'], 
+            description = request.POST['description']
+        )
+
+        profileid = Profile.objects.get(userid_id=request.user.id)
+        user = User.objects.get(id=request.user.id)
+        obj2 = Logs(userid=user, description="Updated their leave", profile_id_id=profileid.id)
+        obj2.save()
+        return redirect('leave')
+
+    return render(request, "User/leave/editleave.html", context)
+
+@login_required(login_url='login')
+def deleteleave(request, id):
+    obj = get_object_or_404(Leave, id = id)
+    if request.method =="GET":
+        obj.delete()
+        profileid = Profile.objects.get(userid_id=request.user.id)
+        user = User.objects.get(id=request.user.id)
+        obj2 = Logs(userid=user, description="Deleted a Leave with id "+str(id), profile_id_id=profileid.id)
+        obj2.save()
+    return redirect('leave')

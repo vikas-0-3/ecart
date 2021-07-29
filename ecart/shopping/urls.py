@@ -72,6 +72,16 @@ urlpatterns = [
     path('adddeliveryboy', views.adddeliveryboy, name="adddeliveryboy"),
     path('editdeliveryboy/<id>', views.editdeliveryboy, name="editdeliveryboy"),
     path('deletedeliveryboy/<id>', views.deletedeliveryboy, name="deletedeliveryboy"),
+
+    path('quotation', views.quotation, name="quotation"),
+    path('addquotation', views.addquotation, name="addquotation"),
+    path('deletequotation/<id>', views.deletequotation, name="deletequotation"),
+    path('viewquotation/<id>', views.viewquotation, name="viewquotation"),
+
+
+    path('leave', views.leave, name="leave"),
+    path('editleave/<id>', views.editleave, name="editleave"),
+    path('deleteleave/<id>', views.deleteleave, name="deleteleave"),
     
 ]
 

@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from django.db.models import fields
-from .models import Lead, Product, Contact, Social, Task, Contract, Sales, Deliveryboy, Logs, Profile, Documents, Knowledge, Social
+from .models import Lead, Product, Contact, Social, Task, Contract, Sales, Deliveryboy, Logs, Profile, Documents, Knowledge, Social, Quotations, Quoteitem, Leave
 
 
 class CreateUserForm(UserCreationForm):
@@ -195,4 +195,44 @@ class SocialForm(forms.ModelForm):
             "github",
             "email",
             "phone",
+        ]
+
+
+class QuotationsForm(forms.ModelForm):
+    class Meta:
+        model = Quotations
+        fields = [  
+            "customer_name",
+            "title",
+            "note",
+            "status",
+            "discount",
+            "shipping",
+            "tax",
+            "grand_total",
+            "addedby",
+        ]
+
+class QuoteitemForm(forms.ModelForm):
+    class Meta:
+        model = Quoteitem
+        fields = [  
+            "quotation_id",
+            "product_code",
+            "product_name",
+            "product_price",
+            "product_quantity",
+            "product_total",
+        ]
+
+class LEaveForm(forms.ModelForm):
+    class Meta:
+        model = Leave
+        fields = [
+            "purpose",
+            "from_date",
+            "to_date",
+            "description",
+            "status",
+            "addedby",
         ]
