@@ -323,8 +323,7 @@ def sales(request):
 @login_required(login_url='login')
 def editsale(request, id):
     context ={}
-    context["customersdata"] = Contact.objects.all()
-    context["productdata"] = Product.objects.all()
+    context["qdata"] = Quotations.objects.all()
     context["deliveryboydata"] = Deliveryboy.objects.all()
   
     obj = get_object_or_404(Sales, id = id)
@@ -344,8 +343,7 @@ def editsale(request, id):
 @login_required(login_url='login')
 def addsale(request):
     context = {}
-    context["customersdata"] = Contact.objects.all()
-    context["productdata"] = Product.objects.all()
+    context["qdata"] = Quotations.objects.all()
     context["deliveryboydata"] = Deliveryboy.objects.all()
 
     form = SalesForm(request.POST or None)

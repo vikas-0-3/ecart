@@ -95,21 +95,6 @@ class Deliveryboy(models.Model):
     def __str__(self):
         return self.full_name
 
-        
-
-class Sales(models.Model):
-    customer = models.ForeignKey(Contact, on_delete=DO_NOTHING)
-    product = models.ForeignKey(Product, on_delete=DO_NOTHING)
-    product_price = models.BigIntegerField()
-    quantity = models.IntegerField()
-    total = models.IntegerField()    
-    gst = models.IntegerField()
-    discount = models.IntegerField()
-    grand_total = models.BigIntegerField()
-    deliveryboy = models.ForeignKey(Deliveryboy, on_delete=DO_NOTHING)
-    order_date = models.DateField()
-    delivery_date = models.DateField()
-    addedby = models.ForeignKey(User, on_delete=DO_NOTHING)
 
 
 class Contract(models.Model):
@@ -190,6 +175,10 @@ class Quotations(models.Model):
     addedby = models.ForeignKey(User, on_delete=DO_NOTHING,)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        ret = str(self.customer_name) +" - "+str(self.title)
+        return ret
+
 
 class Quoteitem(models.Model):
     quotation_id = models.ForeignKey(Quotations, on_delete=models.CASCADE)
@@ -209,3 +198,20 @@ class Leave(models.Model):
     status = models.CharField(max_length=100)
     appliad_at = models.DateTimeField(auto_now_add=True)
     addedby = models.ForeignKey(User, on_delete=models.CASCADE,)
+
+
+
+
+
+class Sales(models.Model):
+    quotation = models.ForeignKey(Quotations, on_delete=DO_NOTHING)
+    vendor = models.TextField(max_length=200)
+    vendor_price = models.BigIntegerField()
+    payment_mode = models.CharField(max_length=200)
+    our_price = models.BigIntegerField()
+    payment_status = models.TextField(max_length=200)
+    profit = models.BigIntegerField()
+    deliveryboy = models.ForeignKey(Deliveryboy, on_delete=DO_NOTHING)
+    order_date = models.DateField()
+    delivery_date = models.DateField()
+    addedby = models.ForeignKey(User, on_delete=DO_NOTHING)

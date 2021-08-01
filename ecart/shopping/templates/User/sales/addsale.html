@@ -15,15 +15,15 @@
                     <div class="row">
                     
                         <div class="col-sm">
-                            <h5>Contact Details</h5>
+                            <h5>Sale Details</h5>
                             <hr>
                             <input type="hidden" name="addedby" value="{{ request.user.id }}">
                                 <div class="form-group">
-                                    <label for="customer">Customer</label>
-                                    <!-- <input type="text" class="form-control dropify" name="customer" id="customer" placeholder="Customer" required> -->
-                                    <select class="form-control form-control-lg" name="customer" id="customer">
-                                        {% for da in customersdata %}
-                                            <option value="{{ da.id }}">{{ da.full_name }} - {{ da.company_name }}</option>
+                                    <label for="quotation">Quotation</label>
+                                    <select class="form-control form-control-lg" name="quotation" id="quotation">
+                                        <option>Select quotation</option>
+                                        {% for da in qdata %}
+                                            <option value="{{ da.id }}" data-foo="{{ da.grand_total }}">{{ da.created_at }} - {{ da.title }} </option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -31,18 +31,14 @@
                                 <div class="row">
                                     <div class="col-sm">
                                         <div class="form-group">
-                                            <label for="product">Product</label>
-                                              <select class="form-control form-control-lg" name="product" id="product" onselect="myFunction()">
-                                                  {% for daa in productdata %}
-                                                      <option value="{{ daa.id }}" foo="{{ daa.product_price }}">{{ daa.product_name }}</option>
-                                                  {% endfor %}
-                                              </select>
+                                            <label for="vendor">Vendor</label>
+                                                <input type="text" class="form-control" name="vendor"  id="vendor" placeholder="vendor details" value="" >
                                           </div>
                                     </div>
                                     <div class="col-sm">
                                         <div class="form-group">
-                                            <label for="product_price">Product Price</label>
-                                            <input type="number" class="form-control" name="product_price"  id="product_price" placeholder="Product Price" value="" >
+                                            <label for="vendor_price">Vendor Price</label>
+                                            <input type="number" class="form-control" name="vendor_price"  id="vendor_price" placeholder="Vendor Price" value="" onchange="calcprofit()" >
                                         </div>
                                     </div>
                                 </div>
@@ -50,14 +46,20 @@
                                 <div class="row">
                                     <div class="col-sm">
                                         <div class="form-group">
-                                            <label for="quantity">Quantity</label>
-                                            <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Quantity" oninput="calctotal(this.value)">
+                                            <label for="payment_mode">Payment Mode</label>
+                                            <select class="form-control form-control-lg" name="payment_mode" id="payment_mode">
+                                                <option value="Cash">Cash</option>
+                                                <option value="Credit Card">Credit Card</option>
+                                                <option value="Debit Card">Debit Card</option>
+                                                <option value="UPI">UPI</option>
+                                                <option value="Cheque">Cheque</option>
+                                            </select>                                        
                                         </div>
                                     </div>
                                     <div class="col-sm">
                                         <div class="form-group">
-                                            <label for="total">Total</label>
-                                            <input type="text" class="form-control" name="total" id="total" placeholder="Total" >
+                                            <label for="our_price">Our Price</label>
+                                            <input type="text" class="form-control" name="our_price" id="our_price" placeholder="our price" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -65,23 +67,23 @@
                                 <div class="row">
                                     <div class="col-sm">
                                         <div class="form-group">
-                                            <label for="gst">GST</label>
-                                            <input type="text" class="form-control" name="gst" id="gst" placeholder="GST (in %)" oninput="calcgttl(this.value)">
+                                            <label for="payment_status">Payment Status</label>
+                                            <select class="form-control form-control-lg" name="payment_status" id="payment_status">
+                                                <option value="Paid">Paid</option>
+                                                <option value="Due">Due</option>
+                                            </select> 
                                         </div>
                                     </div>
                                     <div class="col-sm">
                                         <div class="form-group">
-                                            <label for="discount">Discount</label>
-                                            <input type="text" class="form-control" name="discount" value="0" id="discount" placeholder="Discount" oninput="reddis(this.value)">
+                                            <label for="profit">Profit</label>
+                                            <input type="number" class="form-control" name="profit" value="0" id="profit" placeholder="profit" readonly>
                                         </div>
                                     </div>
                                 </div>
                                   
                                 
-                                <div class="form-group">
-                                    <label for="grand_total">Grand Total</label>
-                                    <input type="number" class="form-control" name="grand_total" id="grand_total" placeholder="Grand Total" value="0">
-                                </div>
+                    
                                 <div class="form-group">
                                     <label for="deliveryboy">DeliveryBoy</label>
                                     <select class="form-control form-control-lg" name="deliveryboy" id="deliveryboy">
@@ -115,7 +117,6 @@
                     </div>
                     <div class="row justify-content-end">
                         <button type="submit" class="btn btn-secondary m-1">SAVE</button>
-                        <button type="button" class="btn btn-secondary m-1">SAVE AND CREATE CONTACT</button>
                     </div>
                     <br>
                 </form>
@@ -127,27 +128,18 @@
 
 
 <script>
-    var x = document.getElementById("product").options[product.options.selectedIndex].getAttribute('foo');
-    document.getElementById("product_price").value = x;
 
-function myFunction() {
-    var x = document.getElementById("product").options[product.options.selectedIndex].getAttribute('foo');
-    document.getElementById("product_price").value = x;
+$('#quotation').on('change', function() {
+    var pr = $(this).find(':selected').data('foo');
+    $("#our_price").val(pr);
+});
+
+function calcprofit() {
+    var a1 = $("#our_price").val();
+    var a2 = $("#vendor_price").val();
+    $("#profit").val(a1-a2);
 
 }
-
-function calctotal(q) {
-    document.getElementById("total").value =  document.getElementById("product_price").value * q;
-}
-
-function calcgttl(g) {
-    document.getElementById("grand_total").value = parseInt(document.getElementById("total").value) + parseInt(g*(document.getElementById("total").value/100));
-}
-function reddis(d) {
-    document.getElementById("grand_total").value = parseInt(document.getElementById("total").value) + parseInt(parseInt(document.getElementById("grand_total").value)*parseInt(document.getElementById("total").value/100)) - d;
-}
-
-
 </script>
 
 

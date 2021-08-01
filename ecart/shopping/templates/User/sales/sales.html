@@ -17,14 +17,13 @@
 									<thead>
 										<tr>
 											<th>#</th>
-											<th>Customer</th>
-											<th>Product Name</th>
-											<th>Product Price</th>
-											<th>Quantity</th>
-											<th>Total</th>
-											<th>GST</th>
-											<th>Discount</th>
-											<th>Grand Total</th>
+											<th>Quotation</th>
+											<th>Vendor</th>
+											<th>Vendor Price</th>
+											<th>Payment Mode</th>
+											<th>Payment Status</th>
+											<th>Quotation Price</th>
+											<th>Profit</th>
 											<th>DeliveryBoy</th>
 											<th>Added by</th>
 											<th>Order Date</th>
@@ -38,14 +37,13 @@
 										{% for da in data %}
 										<tr>
 											<td>{{ da.id }}</td>
-											<td>{{ da.customer.full_name }} - <i>{{ da.customer.company_name }}</i></td>
-											<td>{{ da.product.product_name }}</td>
-											<td>{{ da.product_price }}</td>
-											<td>{{ da.quantity }}</td>
-											<td>{{ da.total }}</td>
-											<td>{{ da.gst }}</td>
-											<td>{{ da.discount }}</td>
-											<td>{{ da.grand_total }}</td>
+											<td><i>{{ da.quotation }}</i></td>
+											<td>{{ da.vendor }}</td>
+											<td>{{ da.vendor_price }}</td>					
+											<td>{{ da.payment_mode }}</td>
+											<td>{{ da.payment_status }}</td>
+											<td>{{ da.our_price }}</td>
+											<td>{{ da.profit }}</td>
 											<td>{{ da.deliveryboy }}</td>
 											<td>{{ da.addedby }}</td>
 											<td>{{ da.order_date }}</td>

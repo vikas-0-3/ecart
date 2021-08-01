@@ -87,14 +87,13 @@ class SalesForm(forms.ModelForm):
     class Meta:
         model = Sales
         fields =  [
-            "customer",
-            "product",
-            "product_price",
-            "quantity",
-            "total",
-            "gst",
-            "discount",
-            "grand_total",
+            "quotation",
+            "vendor",
+            "vendor_price",
+            "payment_mode",
+            "our_price",
+            "payment_status",
+            "profit",
             "deliveryboy",
             "order_date",
             "delivery_date",

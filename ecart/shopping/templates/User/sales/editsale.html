@@ -6,7 +6,7 @@
     <!-- MAIN CONTENT -->
     <div class="main-content">
         <div class="container-fluid card" style="background-color: white;">
-            <h3 class="bg-light p-2">Edit Sale</h3>
+            <h3 class="bg-light p-2">Edit Sale</h3> 
 
             <div class="card">
                 <div class="container-fluid">
@@ -15,15 +15,15 @@
                     <div class="row">
                     
                         <div class="col-sm">
-                            <h5>Contact Details</h5>
+                            <h5>Sale Details</h5>
                             <hr>
                             <input type="hidden" name="addedby" value="{{ request.user.id }}">
                                 <div class="form-group">
-                                    <label for="customer">Customer</label>
-
-                                    <select class="form-control form-control-lg" name="customer" id="customer">
-                                        {% for da in customersdata %}
-                                            <option value="{{ da.id }}" {% if da.id == data.customer.value %}selected{% endif %}>{{ da.full_name }} - {{ da.company_name }}</option>
+                                    <label for="quotation">Quotation</label>
+                                    <select class="form-control form-control-lg" name="quotation" id="quotation">
+                                        <option>Select quotation</option>
+                                        {% for da in qdata %}
+                                            <option value="{{ da.id }}" data-foo="{{ da.grand_total }}" {% if data.quotation.value == da.id %}selected{% endif %}>{{ da.created_at }} - {{ da.title }} </option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -31,18 +31,14 @@
                                 <div class="row">
                                     <div class="col-sm">
                                         <div class="form-group">
-                                            <label for="product">Product</label>
-                                              <select class="form-control form-control-lg" name="product" id="product" onselect="myFunction()">
-                                                  {% for daa in productdata %}
-                                                      <option value="{{ daa.id }}" foo="{{ daa.product_price }}" {% if daa.id == data.product.value %}selected{% endif %}>{{ daa.product_name }}</option>
-                                                  {% endfor %}
-                                              </select>
+                                            <label for="vendor">Vendor</label>
+                                                <input type="text" class="form-control" name="vendor"  id="vendor" placeholder="vendor details" value="{{data.vendor.value}}" >
                                           </div>
                                     </div>
                                     <div class="col-sm">
                                         <div class="form-group">
-                                            <label for="product_price">Product Price</label>
-                                            <input type="number" class="form-control" name="product_price" value="{{ data.product_price.value }}" id="product_price" placeholder="Product Price" >
+                                            <label for="vendor_price">Vendor Price</label>
+                                            <input type="number" class="form-control" name="vendor_price"  id="vendor_price" placeholder="Vendor Price" value="{{data.vendor_price.value}}" onchange="calcprofit()" >
                                         </div>
                                     </div>
                                 </div>
@@ -50,14 +46,20 @@
                                 <div class="row">
                                     <div class="col-sm">
                                         <div class="form-group">
-                                            <label for="quantity">Quantity</label>
-                                            <input type="number" class="form-control" name="quantity" value="{{ data.quantity.value }}" id="quantity" placeholder="Quantity" oninput="calctotal(this.value)">
+                                            <label for="payment_mode">Payment Mode</label>
+                                            <select class="form-control form-control-lg" name="payment_mode" id="payment_mode">
+                                                <option value="Cash" {% if data.payment_status.value == "Cash" %}selected{% endif %}>Cash</option>
+                                                <option value="Credit Card" {% if data.payment_status.value == "Credit Card" %}selected{% endif %}>Credit Card</option>
+                                                <option value="Debit Card" {% if data.payment_status.value == "Debit Card" %}selected{% endif %}>Debit Card</option>
+                                                <option value="UPI" {% if data.payment_status.value == "UPI" %}selected{% endif %}>UPI</option>
+                                                <option value="Cheque" {% if data.payment_status.value == "Cheque" %}selected{% endif %}>Cheque</option>
+                                            </select>                                        
                                         </div>
                                     </div>
                                     <div class="col-sm">
                                         <div class="form-group">
-                                            <label for="total">Total</label>
-                                            <input type="text" class="form-control" value="{{ data.total.value }}" name="total" id="total" placeholder="Total" >
+                                            <label for="our_price">Our Price</label>
+                                            <input type="text" class="form-control" name="our_price" id="our_price" placeholder="our price" value="{{data.our_price.value}}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -65,23 +67,21 @@
                                 <div class="row">
                                     <div class="col-sm">
                                         <div class="form-group">
-                                            <label for="gst">GST</label>
-                                            <input type="text" class="form-control" name="gst" value="{{ data.gst.value }}" id="gst" placeholder="GST (in %)" oninput="calcgttl(this.value)">
+                                            <label for="payment_status">Payment Status</label>
+                                            <select class="form-control form-control-lg" name="payment_status" id="payment_status">
+                                                <option value="Paid" {% if data.payment_status.value == "Paid" %}selected{% endif %}>Paid</option>
+                                                <option value="Due" {% if data.payment_status.value == "Due" %}selected{% endif %}>Due</option>
+                                            </select> 
                                         </div>
                                     </div>
                                     <div class="col-sm">
                                         <div class="form-group">
-                                            <label for="discount">Discount</label>
-                                            <input type="text" class="form-control" name="discount" value="{{ data.discount.value }}" id="discount" placeholder="Discount" oninput="reddis(this.value)">
+                                            <label for="profit">Profit</label>
+                                            <input type="number" class="form-control" name="profit" value="{{data.profit.value}}" id="profit" placeholder="profit" readonly>
                                         </div>
                                     </div>
                                 </div>
-                                  
-                                
-                                <div class="form-group">
-                                    <label for="grand_total">Grand Total</label>
-                                    <input type="number" class="form-control" name="grand_total" value="{{ data.grand_total.value }}" id="grand_total" placeholder="Grand Total">
-                                </div>
+
                                 <div class="form-group">
                                     <label for="deliveryboy">DeliveryBoy</label>
                                     <select class="form-control form-control-lg" name="deliveryboy" id="deliveryboy">
@@ -125,30 +125,20 @@
 </div>
 
 
-
 <script>
-    var x = document.getElementById("product").options[product.options.selectedIndex].getAttribute('foo');
-    document.getElementById("product_price").value = x;
 
-function myFunction() {
-    var x = document.getElementById("product").options[product.options.selectedIndex].getAttribute('foo');
-    document.getElementById("product_price").value = x;
-
-}
-
-function calctotal(q) {
-    document.getElementById("total").value =  document.getElementById("product_price").value * q;
-}
-
-function calcgttl(g) {
-    document.getElementById("grand_total").value = parseInt(document.getElementById("total").value) + parseInt(g*(document.getElementById("total").value/100));
-}
-function reddis(d) {
-    document.getElementById("grand_total").value = parseInt(document.getElementById("total").value) + parseInt(parseInt(document.getElementById("grand_total").value)*parseInt(document.getElementById("total").value/100)) - d;
-}
-
-
-</script>
+    $('#quotation').on('change', function() {
+        var pr = $(this).find(':selected').data('foo');
+        $("#our_price").val(pr);
+    });
+    
+    function calcprofit() {
+        var a1 = $("#our_price").val();
+        var a2 = $("#vendor_price").val();
+        $("#profit").val(a1-a2);
+    
+    }
+    </script>
 <script>
     dateformatvalue("{{ data.order_date.value }}", "order_date");
     dateformatvalue("{{ data.delivery_date.value }}", "delivery_date");
