@@ -82,6 +82,13 @@ urlpatterns = [
     path('leave', views.leave, name="leave"),
     path('editleave/<id>', views.editleave, name="editleave"),
     path('deleteleave/<id>', views.deleteleave, name="deleteleave"),
+    path('manageleave', views.manageleave, name="manageleave"),
+    path('acceptleave/<id>', views.acceptleave, name="acceptleave"),
+    path('declineleave/<id>', views.declineleave, name="declineleave"),
+
+    
+
+    
     
 ]
 

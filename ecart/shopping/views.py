@@ -968,11 +968,7 @@ def leave(request):
         obj2 = Logs(userid=user, description="apply for a Leave ", profile_id_id=profileid.id)
         obj2.save()
 
-
-  
         return redirect('leave')
-
-
     return render(request, "User/leave/leave.html", context)
 
 
@@ -1007,3 +1003,30 @@ def deleteleave(request, id):
         obj2 = Logs(userid=user, description="Deleted a Leave with id "+str(id), profile_id_id=profileid.id)
         obj2.save()
     return redirect('leave')
+
+
+@login_required(login_url='login')
+def manageleave(request):
+    context = {}
+    context["data"] = Leave.objects.all()
+    return render(request, "User/leave/manageleave.html", context)
+
+
+@login_required(login_url='login')
+def declineleave(request, id):
+    Leave.objects.filter(pk=id).update(status = "Rejected",)
+    profileid = Profile.objects.get(userid_id=request.user.id)
+    user = User.objects.get(id=request.user.id)
+    obj2 = Logs(userid=user, description="Rejected a leave with id"+str(id), profile_id_id=profileid.id)
+    obj2.save()
+    return redirect('manageleave')
+
+
+@login_required(login_url='login')
+def acceptleave(request, id):
+    Leave.objects.filter(pk=id).update(status = "Accepted",)
+    profileid = Profile.objects.get(userid_id=request.user.id)
+    user = User.objects.get(id=request.user.id)
+    obj2 = Logs(userid=user, description="Accepted a leave with id"+str(id), profile_id_id=profileid.id)
+    obj2.save()
+    return redirect('manageleave')
