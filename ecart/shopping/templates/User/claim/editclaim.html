@@ -1,0 +1,78 @@
+{% load static %}
+{% include 'User/head.html' %}
+
+
+<div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid card" style="background-color: white;">
+            <h3 class="bg-light p-2">Edit Claim</h3>
+            
+                <div class="container-fluid">
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="modal-body">
+    
+                            <div class="form-group">
+                                <label for="purpose">Purpose</label>
+                                <select class="form-control form-control-lg" name="purpose" id="purpose">
+                                    <option value="Phone Allowance" {% if claimdata.purpose == "Phone Allowance" %}selected{% endif %} >Phone Allowance</option>
+                                    <option value="Vehicle Claim" {% if claimdata.purpose == "Vehicle Claim" %}selected{% endif %} >Vehicle Claim</option>
+                                    <option value="Parking claim" {% if claimdata.purpose == "Parking claim" %}selected{% endif %} >Parking claim</option>
+                                    <option value="Medical Claim" {% if claimdata.purpose == "Medical Claim" %}selected{% endif %} >Medical Claim Leave</option>
+                                    <option value="Person Meet" {% if claimdata.purpose == "Person Meet" %}selected{% endif %} >Person Meet</option>
+                                    <option value="Others" {% if claimdata.purpose == "Others" %}selected{% endif %} >Others</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" class="form-control" name="title" id="title" placeholder="title" value="{{ claimdata.title }}">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="form-group">
+                                        <label for="from">From Date</label>
+                                        <input type="date" class="form-control" name="from_date" id="from_date" placeholder="from">
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="form-group">
+                                        <label for="to">To Date</label>
+                                        <input type="date" class="form-control" name="to_date" id="to_date" placeholder="to">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="amount">Amount</label>
+                                <input type="number" class="form-control" name="amount" id="amount" placeholder="amount" value="{{ claimdata.amount }}">
+                            </div>
+                            
+                            
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea type="text" class="form-control" name="description" id="description" placeholder="description" rows="4">{{ claimdata.description }}</textarea>
+                            </div>
+    
+                        </div>
+                        <div class="modal-footer">
+                        <button type="submit" class="btn btn-secondary">Save</button>
+                        </div>
+                    </form>
+                </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    dateformatvalue("{{ claimdata.from_date }}", "from_date");  
+    dateformatvalue("{{ claimdata.to_date }}", "to_date");  
+</script>
+
+
+
+
+{% include 'User/foot2.html' %}

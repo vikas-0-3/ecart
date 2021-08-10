@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from django.db.models import fields
-from .models import Lead, Product, Contact, Social, Task, Contract, Sales, Deliveryboy, Logs, Profile, Documents, Knowledge, Social, Quotations, Quoteitem, Leave
+from .models import Lead, Product, Contact, Social, Task, Contract, Sales, Deliveryboy, Logs, Profile, Documents, Knowledge, Social, Quotations, Quoteitem, Leave, Claim
 
 
 class CreateUserForm(UserCreationForm):
@@ -231,6 +231,20 @@ class LEaveForm(forms.ModelForm):
             "purpose",
             "from_date",
             "to_date",
+            "description",
+            "status",
+            "addedby",
+        ]
+
+class ClaimForm(forms.ModelForm):
+    class Meta:
+        model = Claim
+        fields = [
+            "purpose",
+            "title",
+            "from_date",
+            "to_date",
+            "amount",
             "description",
             "status",
             "addedby",

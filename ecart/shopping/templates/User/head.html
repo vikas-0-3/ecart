@@ -148,6 +148,19 @@
 						</li>
 
 
+						<li>
+							<a href="#subPages4" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Claim</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages4" class="collapse ">
+								<ul class="nav">
+									<li><a href="claim" class=""><span>Claim</span></a></li>
+									{% if perms.shopping.manage_leave %}
+									<li><a href="manageclaim" class=""><span>Manage Claim</span></a></li>
+									{% endif %}
+								</ul>
+							</div>
+						</li>
+
+
 						<li><a href="products" class=""><i class="lnr lnr-text-format"></i> <span>Products</span></a></li>
 						<li><a href="quotation" class=""><i class="lnr lnr-dice"></i> <span>Quotations</span></a></li>
 						<li><a href="sales" class=""><i class="lnr lnr-dice"></i> <span>Sales</span>&emsp;</a></li>

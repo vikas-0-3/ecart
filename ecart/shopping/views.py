@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CreateUserForm, LeadForm, ProductForm, ContactForm, TaskForm, ContractForm, SalesForm, DeliveryboyForm, ProfileForm, SocialForm
-from .models import Lead, Product, Contact, Task, Contract, Sales, Deliveryboy, Logs, Profile, Documents, Knowledge, Social, Quoteitem, Quotations, Leave
+from .forms import CreateUserForm, LeadForm, ProductForm, ContactForm, TaskForm, ContractForm, SalesForm, DeliveryboyForm, ProfileForm, SocialForm, ClaimForm
+from .models import Lead, Product, Contact, Task, Contract, Sales, Deliveryboy, Logs, Profile, Documents, Knowledge, Social, Quoteitem, Quotations, Leave, Claim
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout, login
 
@@ -1028,3 +1028,89 @@ def acceptleave(request, id):
     obj2 = Logs(userid=user, description="Accepted a leave with id"+str(id), profile_id_id=profileid.id)
     obj2.save()
     return redirect('manageleave')
+
+
+
+@login_required(login_url='login')
+def claim(request):
+    context = {}
+    context["data"] = Claim.objects.filter(addedby=request.user.id).all()
+
+    if request.method == 'POST':
+        Claim.objects.create(
+                purpose = request.POST['purpose'],
+                title = request.POST['title'],
+                from_date = request.POST['from_date'],
+                to_date = request.POST['to_date'],
+                amount = request.POST['amount'],
+                description = request.POST['description'],
+                status = "Pending",
+                addedby = User.objects.get(id=request.user.id),
+        )
+        profileid = Profile.objects.get(userid_id=request.user.id)
+        user = User.objects.get(id=request.user.id)
+        obj2 = Logs(userid=user, description="apply for a Claim ", profile_id_id=profileid.id)
+        obj2.save()
+
+        return redirect('claim')
+    return render(request, "User/claim/claim.html", context)
+
+@login_required(login_url='login')
+def deleteclaim(request, id):
+    obj = get_object_or_404(Claim, id = id)
+    if request.method =="GET":
+        obj.delete()
+        profileid = Profile.objects.get(userid_id=request.user.id)
+        user = User.objects.get(id=request.user.id)
+        obj2 = Logs(userid=user, description="Deleted a Claim with id "+str(id), profile_id_id=profileid.id)
+        obj2.save()
+    return redirect('claim')
+
+
+@login_required(login_url='login')
+def editclaim(request, id):
+    context = {}
+    obj = get_object_or_404(Claim, id = id)
+    context["claimdata"] = obj
+    if request.method == "POST":
+        Claim.objects.filter(pk=id).update(
+                purpose = request.POST['purpose'],
+                title = request.POST['title'],
+                from_date = request.POST['from_date'],
+                to_date = request.POST['to_date'],
+                amount = request.POST['amount'],
+                description = request.POST['description'],
+        )
+
+        profileid = Profile.objects.get(userid_id=request.user.id)
+        user = User.objects.get(id=request.user.id)
+        obj2 = Logs(userid=user, description="Updated their claim", profile_id_id=profileid.id)
+        obj2.save()
+        return redirect('claim')
+
+    return render(request, "User/claim/editclaim.html", context)
+
+@login_required(login_url='login')
+def manageclaim(request):
+    context = {}
+    context["data"] = Claim.objects.all()
+    return render(request, "User/claim/manageclaim.html", context)
+
+@login_required(login_url='login')
+def declineclaim(request, id):
+    Claim.objects.filter(pk=id).update(status = "Rejected",)
+    profileid = Profile.objects.get(userid_id=request.user.id)
+    user = User.objects.get(id=request.user.id)
+    obj2 = Logs(userid=user, description="Rejected a claim with id"+str(id), profile_id_id=profileid.id)
+    obj2.save()
+    return redirect('manageclaim')
+
+
+@login_required(login_url='login')
+def acceptclaim(request, id):
+    Claim.objects.filter(pk=id).update(status = "Accepted",)
+    profileid = Profile.objects.get(userid_id=request.user.id)
+    user = User.objects.get(id=request.user.id)
+    obj2 = Logs(userid=user, description="Accepted a claim with id"+str(id), profile_id_id=profileid.id)
+    obj2.save()
+    return redirect('manageclaim')

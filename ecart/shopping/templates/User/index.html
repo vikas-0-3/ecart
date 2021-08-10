@@ -229,30 +229,20 @@
 								<div class="panel-body">
 									<div class="row">
 										<div class="col-sm">
-											<div class="alert ">
-												<i class="fa fa-envelope-square text-danger"></i>&emsp; <a href="{{ socialdata.email }}" target="_blank">Email</a>
-											</div>
-											<div class="alert">
-												<i class="fa fa-phone-square text-success"></i>&emsp;
-												<a href="tel:{{ socialdata.phone }}" onclick="ga('send', 'event', { eventCategory: 'Contact', eventAction: 'Call', eventLabel: 'Mobile Button'});">Phone</a>
-
-											
-											</div>
-											<div class="alert">
-												<i class="fa fa-linkedin text-primary"></i>&emsp; <a href="{{ socialdata.linkedin }}" target="_blank">Linked In</a>
-											</div>
+											<ul class="list-inline social-icons">
+												<li class="m-2"><a href="{{ socialdata.email }}" target="_blank" class="google-plus-bg"><i class="fa fa-envelope-square"></i></a>&emsp; EMAIL</li><br>
+												<li class="m-2"><a href="{{ socialdata.linkedin }}" target="_blank" class="linkedin-bg"><i class="fa fa-linkedin"></i></a>&emsp; LINKEDIN</li><br>
+												<li class="m-2"><a href="tel:{{ socialdata.phone }}" onclick="ga('send', 'event', { eventCategory: 'Contact', eventAction: 'Call', eventLabel: 'Mobile Button'});" class="phone-bg"><i class="fa fa-phone"></i></a>&emsp; PHONE</li><br>
+												<li class="m-2"><a href="{{ socialdata.twitter }}" target="_blank" class="twitter-bg"><i class="fa fa-twitter"></i></a>&emsp; TWITTER</li><br>
+											</ul>
 										</div>
 										<div class="col-sm">
-											
-									<div class="alert">
-										<i class="fa fa-facebook text-primary"></i>&emsp; <a href="{{ socialdata.facebook }}" target="_blank">Facebook</a>
-									</div>
-									<div class="alert">
-										<i class="fa fa-instagram text-danger"></i>&emsp; <a href="{{ socialdata.instagram }}" target="_blank">Instagram</a>
-									</div>
-									<div class="alert">
-										<i class="fa fa-github text-primary"></i>&emsp; <a href="{{ socialdata.github }}" target="_blank">Github</a>
-									</div>
+											<ul class="list-inline social-icons">
+												<li class="m-2"><a href="{{ socialdata.facebook }}" target="_blank" class="facebook-bg"><i class="fa fa-facebook"></i></a>&emsp; FACEBOOK</li><br>
+												<li class="m-2"><a href="{{ socialdata.instagram }}" target="_blank" class="instagram-bg"><i class="fa fa-instagram"></i></a>&emsp; INSTAGRAM</li><br>
+												<li class="m-2"><a href="{{ socialdata.github }}" target="_blank" class="github-bg"><i class="fa fa-github"></i></a>&emsp; GITHUB</li><br>
+												<li class="m-2"><a href="{{ socialdata.email }}" target="_blank" class="website-bg"><i class="fa fa-website"></i></a>&emsp; WEBSITE</li><br>
+											</ul>
 										</div>
 									</div>
 								

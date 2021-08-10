@@ -87,7 +87,12 @@ urlpatterns = [
     path('declineleave/<id>', views.declineleave, name="declineleave"),
 
     
-
+    path('claim', views.claim, name="claim"),
+    path('editclaim/<id>', views.editclaim, name="editclaim"),
+    path('deleteclaim/<id>', views.deleteclaim, name="deleteclaim"),
+    path('manageclaim', views.manageclaim, name="manageclaim"),
+    path('acceptclaim/<id>', views.acceptclaim, name="acceptclaim"),
+    path('declineclaim/<id>', views.declineclaim, name="declineclaim"),
     
     
 ]

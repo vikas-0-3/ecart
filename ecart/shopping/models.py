@@ -200,6 +200,18 @@ class Leave(models.Model):
     addedby = models.ForeignKey(User, on_delete=models.CASCADE,)
 
 
+class Claim(models.Model):
+    purpose = models.CharField(max_length=200)
+    title = models.CharField(max_length=200)
+    from_date = models.DateField()
+    to_date = models.DateField()
+    amount = models.IntegerField()
+    description = models.TextField(max_length=300)
+    status = models.CharField(max_length=100)
+    appliad_at = models.DateTimeField(auto_now_add=True)
+    addedby = models.ForeignKey(User, on_delete=models.CASCADE,)
+
+
 
 
 
