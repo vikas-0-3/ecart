@@ -161,6 +161,8 @@ class Social(models.Model):
     github = models.TextField(max_length=500, null=True, blank=True)
     email = models.TextField(max_length=500, null=True, blank=True)
     phone = models.TextField(max_length=500, null=True, blank=True)
+    website = models.TextField(max_length=500, null=True, blank=True)
+    twitter = models.TextField(max_length=500, null=True, blank=True)
 
 
 class Quotations(models.Model):

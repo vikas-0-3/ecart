@@ -194,6 +194,8 @@ class SocialForm(forms.ModelForm):
             "github",
             "email",
             "phone",
+            "website",
+            "twitter",
         ]
 
 
