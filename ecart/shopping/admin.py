@@ -1,7 +1,10 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Task, Contact, Product, Lead
+from .models import Task, Contact, Product, Lead, Room, Message
+
+admin.site.register(Room)
+admin.site.register(Message)
 
 class TaskAdmin(admin.ModelAdmin):
     list_display = ('id', 'attachment', 'title', 'subject', 'related_to', 'deadline', 'status', 'description', 'addedby', )

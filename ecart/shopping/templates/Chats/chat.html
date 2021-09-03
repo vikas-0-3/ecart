@@ -1,0 +1,96 @@
+{% load static %}
+{% include 'User/head.html' %}
+
+<script>
+  $(document).ready(function(){
+
+  setInterval(function(){
+      $.ajax({
+          type: 'GET',
+          url : "/getMessages",
+          success: function(response){
+              console.log(response);
+              $("#display").empty();
+              for (var key in response.messages)
+              {
+                  var temp="<div class='bg-light p-4 m-2'><b>"+response.messages[key].user+"</b><p>"+response.messages[key].value+"</p><span class='text-right'>"+response.messages[key].date+"</span></div>";
+                  $("#display").append(temp);
+              }
+          },
+          error: function(response){
+              alert('An error occured')
+          }
+      });
+      var targetDiv = document.querySelector('#scrolldiv');
+    targetDiv.scrollTop = targetDiv.scrollHeight;
+  },1000);
+  })
+  </script>
+
+
+<div class="main">
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    <div class="container-fluid">
+      <h2 class="text-center">Discussion Corner</h2>
+
+    
+							<div class="panel" id="scrolldiv" style="height: 73vh; overflow-y: scroll;">
+								<div class="panel-body">
+                  <div id="display"></div>
+								</div>
+							</div>
+              <form id="post-form">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-11">
+                    <input class="form-control form-control-sm" type="text" name="message" id="message" placeholder="Your text here" />
+                  </div>
+                  <div class="col-1">
+                    <input type="submit" class="btn btn-sm btn-dark" value="Send">
+                  </div>
+                </div>
+                
+                
+            </form>
+
+
+
+
+    </div>
+  </div>
+  <!-- END MAIN CONTENT -->
+</div>
+
+<script type="text/javascript">
+  $(document).on('submit','#post-form',function(e){
+    e.preventDefault();
+
+    $.ajax({
+      type:'POST',
+      url:'/send',
+      data:{
+        message:$('#message').val(),
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+      },
+      success: function(data){
+         //alert(data)
+      }
+    });
+    document.getElementById('message').value = ''
+  });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+{% include 'User/foot2.html' %}

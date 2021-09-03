@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, JsonResponse
 from .forms import CreateUserForm, LeadForm, ProductForm, ContactForm, TaskForm, ContractForm, SalesForm, DeliveryboyForm, ProfileForm, SocialForm, ClaimForm
-from .models import Lead, Product, Contact, Task, Contract, Sales, Deliveryboy, Logs, Profile, Documents, Knowledge, Social, Quoteitem, Quotations, Leave, Claim
+from .models import Lead, Product, Contact, Task, Contract, Sales, Deliveryboy, Logs, Profile, Documents, Knowledge, Social, Quoteitem, Quotations, Leave, Claim, Room, Message
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout, login
 
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.models import User
 import datetime
 import time
 
@@ -58,6 +59,7 @@ def loginuser(request):
                 return redirect('home')
             else:
                 messages.info(request, 'Username or password is incorrect')
+                print(user.errors)
         return render(request, "login.html", {})
 
 def logoutuser(request):
@@ -81,11 +83,18 @@ def home(request):
 
     context["contractdata"] = Contract.objects.all().order_by('-id')[:6]
     ttl = Task.objects.filter(addedby=request.user.id).count()
-    context["totaltask"] = ttl
-    context["activecount"] = int(Task.objects.filter(status="Active", addedby=request.user.id).count()/ttl*100)
-    context["pendingcount"] = int(Task.objects.filter(status="Pending", addedby=request.user.id).count()/ttl*100)
-    context["completecount"] = int(Task.objects.filter(status="Completed", addedby=request.user.id).count()/ttl*100)
-    context["inactivecount"] = int(Task.objects.filter(status="Inactive", addedby=request.user.id).count()/ttl*100)
+    if(ttl):
+        context["totaltask"] = ttl
+        context["activecount"] = int(Task.objects.filter(status="Active", addedby=request.user.id).count()/ttl*100)
+        context["pendingcount"] = int(Task.objects.filter(status="Pending", addedby=request.user.id).count()/ttl*100)
+        context["completecount"] = int(Task.objects.filter(status="Completed", addedby=request.user.id).count()/ttl*100)
+        context["inactivecount"] = int(Task.objects.filter(status="Inactive", addedby=request.user.id).count()/ttl*100)
+    else:
+        context["totaltask"] = 0 
+        context["activecount"] = 0 
+        context["pendingcount"] = 0 
+        context["completecount"] = 0 
+        context["inactivecount"] = 0 
 
 
     context["logsdata"] = Logs.objects.all().order_by('-id')[:10]
@@ -230,14 +239,77 @@ def userprofiles(request):
     
     return render(request, "User/settings/userprofiles.html", context)
 
+
+@login_required(login_url='login')
+def adduser(request):
+    context = {}
+
+
+    if request.method == 'POST':
+        User.objects.create_user(
+            email=request.POST['user_email'],
+            password=request.POST['user_phone'],
+            first_name=request.POST['first_name'],
+            last_name=request.POST['last_name'],
+            username=request.POST['first_name']
+        )
+        latest_id = User.objects.latest('id').id
+
+        Profile.objects.create(
+            user_image = request.FILES['user_image'],
+            first_name=request.POST['first_name'],
+            last_name=request.POST['last_name'],
+            user_email=request.POST['user_email'],
+            user_phone=request.POST['user_phone'],
+            dob=request.POST['dob'],
+            points=request.POST['points'],
+            facebook = request.POST['facebook'],
+            instagram = request.POST['instagram'],
+            linkedin = request.POST['linkedin'],
+            github = request.POST['github'],
+
+            about = request.POST['about'],
+            address = request.POST['address'],
+            id_proof = request.FILES['id_proof'],
+            designation = request.POST['designation'],
+            working_from = request.POST['working_from'],
+            working_to = request.POST['working_to'],
+            updated_at = "",
+            gender = request.POST['gender'],
+            project = request.POST['project'],
+            userid_id = latest_id,
+            
+        )
+        profileid = Profile.objects.get(userid_id=request.user.id)
+        user = User.objects.get(id=request.user.id)
+        obj2 = Logs(userid=user, description="added a new user", profile_id_id=profileid.id)
+        obj2.save()
+
+        return redirect('userprofiles')
+
+    return render(request, "User/settings/adduser.html", context)
+
 @login_required(login_url='login')
 def edituserprofile(request, id):
     context ={}
 
     obj = get_object_or_404(Profile, id = id)
+
+    
     form = ProfileForm(request.POST or None, request.FILES or None, instance = obj)
     if form.is_valid():
         form.save()
+        
+
+        User.objects.filter(id=getUserRegisteredId(id).userid_id).update(
+            email=request.POST['user_email'],
+            first_name=request.POST['first_name'],
+            last_name=request.POST['last_name'],
+            username=request.POST['first_name']
+        )
+
+        
+
         profileid = Profile.objects.get(userid_id=request.user.id)
         user = User.objects.get(id=request.user.id)
         obj2 = Logs(userid=user, description="Updated a Profile", profile_id_id=profileid.id)
@@ -252,6 +324,8 @@ def edituserprofile(request, id):
     return render(request, "User/settings/edituserprofile.html", context)
 
 
+def getUserRegisteredId(id):
+    return get_object_or_404(Profile, id = id)
 
 
 
@@ -273,6 +347,15 @@ def editprofile(request):
     form = ProfileForm(request.POST or None, request.FILES or None, instance = obj)
     if form.is_valid():
         form.save()
+
+        User.objects.filter(id=request.user.id).update(
+            email=request.POST['user_email'],
+            first_name=request.POST['first_name'],
+            last_name=request.POST['last_name'],
+            username=request.POST['first_name']
+        )
+
+
         profileid = Profile.objects.get(userid_id=request.user.id)
         user = User.objects.get(id=request.user.id)
         obj2 = Logs(userid=user, description="Updated their Profile", profile_id_id=profileid.id)
@@ -499,6 +582,8 @@ def editproduct(request, id):
         obj2 = Logs(userid=user, description="Updated a Product with id "+str(id), profile_id_id=profileid.id)
         obj2.save()
         return redirect('products')
+    else:
+        print(form.errors)
 
 
     context["data"] = form
@@ -517,11 +602,16 @@ def editproduct(request, id):
 
 # --------------------------       Contact operations view, add, delete , edit  ----------------------------------------------
 
-@login_required(login_url='login')
+# @login_required(login_url='login')
+# def contact(request):
+#     context = {}
+#     context["data"] = Contact.objects.all()
+#     return render(request, "User/contact/contact.html", context)
+
+
 def contact(request):
-    context = {}
-    context["data"] = Contact.objects.all()
-    return render(request, "User/contact/contact.html", context)
+
+    return render(request, "User/contact/contact.html")
 
 
 @login_required(login_url='login')
@@ -598,13 +688,19 @@ def tasks(request):
     context = {}
     context["data"] = Task.objects.filter(addedby=request.user.id).all()
     ttl = Task.objects.filter(addedby=request.user.id).count()
-    context["totaltask"] = ttl
-    context["activecount"] = int(Task.objects.filter(status="Active", addedby=request.user.id).count()/ttl*100)
-    context["pendingcount"] = int(Task.objects.filter(status="Pending", addedby=request.user.id).count()/ttl*100)
-    context["completecount"] = int(Task.objects.filter(status="Completed", addedby=request.user.id).count()/ttl*100)
-    context["inactivecount"] = int(Task.objects.filter(status="Inactive", addedby=request.user.id).count()/ttl*100)
+    if(ttl):
+        context["totaltask"] = ttl
+        context["activecount"] = int(Task.objects.filter(status="Active", addedby=request.user.id).count()/ttl*100)
+        context["pendingcount"] = int(Task.objects.filter(status="Pending", addedby=request.user.id).count()/ttl*100)
+        context["completecount"] = int(Task.objects.filter(status="Completed", addedby=request.user.id).count()/ttl*100)
+        context["inactivecount"] = int(Task.objects.filter(status="Inactive", addedby=request.user.id).count()/ttl*100)
+    else:
+        context["totaltask"] = 0 
+        context["activecount"] = 0 
+        context["pendingcount"] = 0 
+        context["completecount"] = 0 
+        context["inactivecount"] = 0 
 
-    
     current_week = date.today().isocalendar()[1]
     today = datetime.date.today()
 
@@ -1114,3 +1210,31 @@ def acceptclaim(request, id):
     obj2 = Logs(userid=user, description="Accepted a claim with id"+str(id), profile_id_id=profileid.id)
     obj2.save()
     return redirect('manageclaim')
+
+
+
+##############################################3
+
+
+############        chat        ###############
+
+###############################################
+
+@login_required(login_url='login')
+def chat(request):
+    context = {}
+    # context["data"] = Leave.objects.all()
+    return render(request, "Chats/chat.html", context)
+
+def send(request):
+    message = request.POST['message']
+    username = request.user.username
+    room_id = "discussionCorner"
+
+    new_message = Message.objects.create(value=message, user=username, room=room_id, userid=request.user.id)
+    new_message.save()
+    return HttpResponse('Message sent successfully')
+
+def getMessages(request):
+    messages = Message.objects.filter(room="discussionCorner")
+    return JsonResponse({"messages":list(messages.values())})

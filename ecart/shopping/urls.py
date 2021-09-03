@@ -16,7 +16,7 @@ urlpatterns = [
     path('profile', views.profile, name="profile"),
     path('editprofile', views.editprofile, name="editprofile"),
 
-
+    path('adduser', views.adduser, name="adduser"),
     path('userprofiles', views.userprofiles, name="userprofiles"),
     path('deleteuser/<id>', views.deleteuser, name="deleteuser"),
     path('edituserprofile/<id>', views.edituserprofile, name="edituserprofile"),
@@ -24,6 +24,10 @@ urlpatterns = [
     
 
     path('calander', views.calander, name="calander"),
+
+    path('chat', views.chat, name="chat"),
+    path('send', views.send, name="send"),
+    path('getMessages', views.getMessages, name="getMessages"),
 
     path('documents', views.documents, name="documents"),
     path('deletedoc/<id>', views.deletedoc, name="deletedoc"),

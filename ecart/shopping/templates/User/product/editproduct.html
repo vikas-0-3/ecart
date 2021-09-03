@@ -11,6 +11,7 @@
                     <form method = "post" enctype="multipart/form-data">
                         {% csrf_token %}
                     <div class="row">
+                        <input type="hidden" name="addedby" value="{{ data.addedby.value }}"" >
                     
                         <div class="col-sm">
                             <h5>Product Details</h5>

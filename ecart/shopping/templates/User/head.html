@@ -160,6 +160,18 @@
 							</div>
 						</li>
 
+						<!-- <li>
+							<a href="#subPages5" data-toggle="collapse" class="collapsed"><i class="lnr lnr-users"></i> <span>Users</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages5" class="collapse ">
+								<ul class="nav">
+									<li><a href="users" class=""><span>Users</span></a></li>
+									{% if perms.shopping.manage_user %}
+									<li><a href="manageuser" class=""><span>Manage Users</span></a></li>
+									{% endif %}
+								</ul>
+							</div>
+						</li> -->
+
 
 						<li><a href="products" class=""><i class="lnr lnr-text-format"></i> <span>Products</span></a></li>
 						<li><a href="quotation" class=""><i class="lnr lnr-dice"></i> <span>Quotations</span></a></li>
@@ -173,7 +185,7 @@
 								<ul class="nav">
 									<li><a href="deliveryboy" class="">Delivery Boy</a></li>
 									{% if request.user.is_staff %}
-									<li><a href="userprofiles" class="">User Profiles</a></li>
+									<li><a href="userprofiles" class="">Users</a></li>
 									{% endif %}
 									<!-- <li><a href="page-login" class="">Login</a></li> --> 
 									<li><a href="socialhandle" class="">Social Handle</a></li>

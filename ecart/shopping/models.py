@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE, DO_NOTHING
 from django.db.models.fields import NullBooleanField
+from datetime import datetime
 # Create your models here.
 
 
@@ -229,3 +230,15 @@ class Sales(models.Model):
     order_date = models.DateField()
     delivery_date = models.DateField()
     addedby = models.ForeignKey(User, on_delete=DO_NOTHING)
+
+#model for chat
+
+class Room(models.Model):
+    name = models.CharField(max_length=1000)
+
+class Message(models.Model):
+    value = models.CharField(max_length=50000)
+    date = models.DateTimeField(default=datetime.now, blank=True)
+    user = models.CharField(max_length=100)
+    userid = models.CharField(max_length=50)
+    room = models.CharField(max_length=100)

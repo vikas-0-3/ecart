@@ -9,13 +9,14 @@
         <div class="container-fluid">
             <h3 class="page-title">Update Profile</h3>
          
-            <form method = "post" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
             <div class="row">
                 <div class="col-md-6">
        
                     <!-- INPUTS -->
                     <input type="hidden" name="userid" value="{{ request.user.id }}">
+                    <!-- <input type="hidden" name="logid" value="{{ {{ data.userid_id.value }} }}"> -->
                     <div class="panel">
                         <div class="panel-heading">
                             <h3 class="panel-title">Basic Info</h3>
