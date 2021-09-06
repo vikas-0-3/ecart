@@ -9,17 +9,8 @@
 	</div>
 	<!-- END WRAPPER -->
 
-	{% if request.get_full_path == "/calander" %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="{% static 'calander/js/evo-calendar.js' %}"></script> 
-	{% endif %}
-
-
-
-
-	{% if request.get_full_path != "/calander" %}
 	<script type="text/javascript" src="https://cdn.datatables.net/v/bs/jq-3.3.1/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.js"></script>
-	{% endif %}
+
 
 
 	
@@ -30,32 +21,6 @@
     <script>
 
 		$(document).ready(function() {
-
-			if(window.location.pathname == "/calander") {
-				$('#calendar').evoCalendar({
-					theme: 'Midnight Blue',
-					calendarEvents: [
-						{
-							id: '1', // Event's ID (required)
-							name: "Payment", // Event name (required)
-							date: "July/15/2020", // Event date (required)
-							type: "holiday", // Event type (required)
-							everyYear: true // Same event every year (optional)
-						},
-
-						{
-							id: '2',
-							name: "Sunday",
-							date: "July/18/2020",
-							type: "Sunday", 
-							everyYear: true
-						},
-						
-					]
-				})
-
-			
-			}
 
 
 

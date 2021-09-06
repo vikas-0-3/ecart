@@ -946,7 +946,24 @@ def editdeliveryboy(request, id):
 @login_required(login_url='login')
 def calander(request):
     context = {}
-    # context["data"] = Product.objects.all()
+    arr = ["Active", "Completed", "Pending", "Inactive"]
+    context["opt"] = arr
+
+
+    if request.method == 'POST':
+        form = TaskForm(request.POST, request.FILES)
+        
+        if form.is_valid():
+            form.save()
+            profileid = Profile.objects.get(userid_id=request.user.id)
+            user = User.objects.get(id=request.user.id)
+            obj2 = Logs(userid=user, description="Added a Task with id "+str(Task.objects.latest('id').id), profile_id_id=profileid.id)
+            obj2.save()
+            return redirect('tasks')
+        else:
+            print(form.errors)
+
+
     return render(request, "User/calander/calander.html", context)
 
 
