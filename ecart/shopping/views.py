@@ -602,16 +602,16 @@ def editproduct(request, id):
 
 # --------------------------       Contact operations view, add, delete , edit  ----------------------------------------------
 
-# @login_required(login_url='login')
-# def contact(request):
-#     context = {}
-#     context["data"] = Contact.objects.all()
-#     return render(request, "User/contact/contact.html", context)
-
-
+@login_required(login_url='login')
 def contact(request):
+    context = {}
+    context["data"] = Contact.objects.all()
+    return render(request, "User/contact/contact.html", context)
 
-    return render(request, "User/contact/contact.html")
+
+# def contact(request):
+
+#     return render(request, "User/contact/contact.html")
 
 
 @login_required(login_url='login')
