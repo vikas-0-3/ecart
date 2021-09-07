@@ -43,10 +43,10 @@ TABLE OF CONTENT
 20. CHATTING SYSTEM
 
 
-INSTALLATION
+## INSTALLATION
 ----------------
 
-STEP 1 : DOWNLOAD THE ZIP FILE FROM HERE https://github.com/vikas-0-3/ecart
+STEP 1 : DOWNLOAD THE ZIP FILE FROM HERE https://github.com/vikas-0-3/ecart 
 STEP 2 : EXTRACT THE FILES AT SOME LOCATION
 STEP 3 : GOTO THIS LOCATION ecart/ecart
 STEP 4 : OPEN COMMAND PROMPT / TERMINAL / WINDOWS POWERSHELL AND TYPE THE FOLLOWING COMMAND (python manage.py runserver) AND HIT ENTER
@@ -90,8 +90,6 @@ CREDITS
 AUTHOR 
 -------------------
 
-|------------------------------------------------------------|
-|   VIKAS GUPTA                                              |
-|   https://www.linkedin.com/in/vikash-gupta-b3579b17b/      |
-|   vg1231923@gmail.com                                      |
-|------------------------------------------------------------|
+   VIKAS GUPTA                                              
+   https://www.linkedin.com/in/vikash-gupta-b3579b17b/      
+   vg1231923@gmail.com                                      
