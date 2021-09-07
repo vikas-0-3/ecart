@@ -1245,6 +1245,7 @@ def chat(request):
     # context["data"] = Leave.objects.all()
     return render(request, "Chats/chat.html", context)
 
+@login_required(login_url='login')
 def send(request):
     message = request.POST['message']
     username = request.user.username
@@ -1254,12 +1255,13 @@ def send(request):
     new_message.save()
     return HttpResponse('Message sent successfully')
 
+@login_required(login_url='login')
 def getMessages(request):
     messages = Message.objects.filter(room="discussionCorner")
     return JsonResponse({"messages":list(messages.values())})
 
 
-
+@login_required(login_url='login')
 def getMyEvents(request):
     myeventsdata = Events.objects.filter(addedby=request.user.id).all()
     return JsonResponse({"data":list(myeventsdata.values())})
