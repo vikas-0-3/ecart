@@ -74,6 +74,8 @@ def logoutuser(request):
 @login_required(login_url='login')
 def home(request):
     context = {}
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id).count()
     context["countlead"] = Lead.objects.count()
     context["countcontact"] = Contact.objects.count()
     context["countproducts"] = Product.objects.count()
@@ -946,8 +948,7 @@ def editdeliveryboy(request, id):
 @login_required(login_url='login')
 def calander(request):
     context = {}
-    myeventsdata = Events.objects.filter(addedby=request.user.id).all()
-    context["data"] = JsonResponse({"data":list(myeventsdata.values())})
+
 
     if request.method == 'POST':
         Events.objects.create(

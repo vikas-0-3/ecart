@@ -11,13 +11,6 @@
 	<!-- VENDOR CSS -->
 
 
-	
-	<!-- calander css -->
-
-	<!-- <link rel="stylesheet" href="{% static 'calander/css/evo-calendar.css' %}">
-	<link rel="stylesheet" href="{% static 'calander/css/evo-calendar.midnight-blue.css' %}"> -->
-
-
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 
@@ -91,15 +84,13 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
 								<i class="lnr lnr-alarm"></i>
-								<span class="badge bg-danger">5</span>
+								<span class="badge bg-danger">{{ eventcount }}</span>
 							</a>
 							<ul class="dropdown-menu notifications">
-								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li>
-								<li><a href="#" class="more">See all notifications</a></li>
+								{% for events in eventdata %}
+								<li class="notification-item m-3 p-3"><span class="dot bg-info"></span>{{ events.eventtitle }}</li>
+								{% endfor %}
+								<li class="more m-2 p-2"><a href="/calander">See all events</a></li>
 							</ul>
 						</li>
 						
@@ -138,7 +129,7 @@
 						</li>
 
 						<li><a href="lead" class=""><i class="lnr lnr-chart-bars"></i> <span>Leads</span></a></li>
-
+					
 						<li>
 							<a href="#subPages3" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Leaves</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages3" class="collapse ">

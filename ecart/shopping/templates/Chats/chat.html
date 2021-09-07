@@ -9,7 +9,6 @@
           type: 'GET',
           url : "/getMessages",
           success: function(response){
-              console.log(response);
               $("#display").empty();
               for (var key in response.messages)
               {
