@@ -242,3 +242,10 @@ class Message(models.Model):
     user = models.CharField(max_length=100)
     userid = models.CharField(max_length=50)
     room = models.CharField(max_length=100)
+
+
+class Events(models.Model):
+    eventdate = models.CharField(max_length=100)
+    eventtitle = models.CharField(max_length=500)
+    description = models.CharField(max_length=500)
+    addedby = models.ForeignKey(User, on_delete=DO_NOTHING)

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from .forms import CreateUserForm, LeadForm, ProductForm, ContactForm, TaskForm, ContractForm, SalesForm, DeliveryboyForm, ProfileForm, SocialForm, ClaimForm
-from .models import Lead, Product, Contact, Task, Contract, Sales, Deliveryboy, Logs, Profile, Documents, Knowledge, Social, Quoteitem, Quotations, Leave, Claim, Room, Message
+from .models import Lead, Product, Contact, Task, Contract, Sales, Deliveryboy, Logs, Profile, Documents, Knowledge, Social, Quoteitem, Quotations, Leave, Claim, Room, Message, Events
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout, login
 
@@ -946,22 +946,23 @@ def editdeliveryboy(request, id):
 @login_required(login_url='login')
 def calander(request):
     context = {}
-    arr = ["Active", "Completed", "Pending", "Inactive"]
-    context["opt"] = arr
-
+    myeventsdata = Events.objects.filter(addedby=request.user.id).all()
+    context["data"] = JsonResponse({"data":list(myeventsdata.values())})
 
     if request.method == 'POST':
-        form = TaskForm(request.POST, request.FILES)
-        
-        if form.is_valid():
-            form.save()
-            profileid = Profile.objects.get(userid_id=request.user.id)
-            user = User.objects.get(id=request.user.id)
-            obj2 = Logs(userid=user, description="Added a Task with id "+str(Task.objects.latest('id').id), profile_id_id=profileid.id)
-            obj2.save()
-            return redirect('tasks')
-        else:
-            print(form.errors)
+        Events.objects.create(
+                eventdate = request.POST['eventdate'],
+                eventtitle = request.POST['title'],
+                description = request.POST['description'],
+                addedby = User.objects.get(id=request.user.id),
+        )
+
+        profileid = Profile.objects.get(userid_id=request.user.id)
+        user = User.objects.get(id=request.user.id)
+        obj2 = Logs(userid=user, description="Added a event with id "+str(id), profile_id_id=profileid.id)
+        obj2.save()
+        return redirect('calander')
+
 
 
     return render(request, "User/calander/calander.html", context)
@@ -1255,3 +1256,9 @@ def send(request):
 def getMessages(request):
     messages = Message.objects.filter(room="discussionCorner")
     return JsonResponse({"messages":list(messages.values())})
+
+
+
+def getMyEvents(request):
+    myeventsdata = Events.objects.filter(addedby=request.user.id).all()
+    return JsonResponse({"data":list(myeventsdata.values())})

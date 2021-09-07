@@ -12,6 +12,7 @@ urlpatterns = [
     path('home', views.home, name="home"),
 
     path('email', views.email, name="email"),
+    path('getMyEvents', views.getMyEvents, name="getMyEvents"),
     
     path('profile', views.profile, name="profile"),
     path('editprofile', views.editprofile, name="editprofile"),
