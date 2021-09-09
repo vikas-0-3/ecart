@@ -11,10 +11,10 @@
 	<!-- VENDOR CSS -->
 
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
 
 
-
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
 	<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
 	<link rel="stylesheet" href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}">
 	<link rel="stylesheet" href="{% static 'vendor/linearicons/style.css' %}">
@@ -34,11 +34,11 @@
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
 
 
-
+	<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 	
     <link href="{% static 'node_modules/fullcalendar/main.css' %}" rel='stylesheet' />
 	<script src="{% static 'node_modules/fullcalendar/main.js' %}"></script>
-	<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+
 
 
 <script>
@@ -81,6 +81,9 @@
 		
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a class="text-dark" title="Current ip address" style="cursor: pointer;"><b>{{ ip_address }}</b></a>
+						</li>
 						
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
@@ -89,12 +92,12 @@
 							</a>
 							<ul class="dropdown-menu notifications">
 								{% for events in eventdata %}
-								<li class="notification-item m-3 p-3"><span class="dot bg-info"></span>{{ events.eventtitle }}</li>
+								<li><a href="/calander" class="notification-item"><span class="dot bg-info"></span>{{ events.eventtitle }}</a></li>
 								{% endfor %}
 								<li class="more m-2 p-2"><a href="/calander">See all events</a></li>
 							</ul>
 						</li>
-						
+
 						
 						</li>
 						<li class="dropdown">

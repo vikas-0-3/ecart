@@ -74,8 +74,17 @@ def logoutuser(request):
 @login_required(login_url='login')
 def home(request):
     context = {}
-    context["eventdata"] = Events.objects.filter(addedby=request.user.id).all()
-    context["eventcount"] = Events.objects.filter(addedby=request.user.id).count()
+
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["countlead"] = Lead.objects.count()
     context["countcontact"] = Contact.objects.count()
     context["countproducts"] = Product.objects.count()
@@ -83,7 +92,7 @@ def home(request):
     context["countsales"] = Sales.objects.count()
     context["countdeliveryboy"] = Deliveryboy.objects.count()
 
-    context["contractdata"] = Contract.objects.all().order_by('-id')[:6]
+    context["contractdata"] = Contract.objects.all().order_by('id')[:6]
     ttl = Task.objects.filter(addedby=request.user.id).count()
     if(ttl):
         context["totaltask"] = ttl
@@ -102,12 +111,26 @@ def home(request):
     context["logsdata"] = Logs.objects.all().order_by('-id')[:10]
     context["socialdata"] = Social.objects.get(id=1)
 
+
+
+
     return render(request, "User/index.html", context)
 
 
 @login_required(login_url='login')
 def email(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
 
     context["maillist"] = User.objects.all()
 
@@ -129,6 +152,17 @@ def email(request):
 @login_required(login_url='login')
 def logs(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["logsdata"] = Logs.objects.all().order_by('-id')
     
     return render(request, "User/logs/logs.html", context)
@@ -137,6 +171,17 @@ def logs(request):
 @login_required(login_url='login')
 def socialhandle(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["socialdata"] = Social.objects.all()
     
     obj = get_object_or_404(Social, id = '1')
@@ -157,6 +202,17 @@ def socialhandle(request):
 @login_required(login_url='login')
 def documents(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["data"] = Documents.objects.all()
     if request.method == 'POST':
         doc = request.POST
@@ -209,6 +265,17 @@ def deleteknowledge(request, id):
 @login_required(login_url='login')
 def knowledge(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["data"] = Knowledge.objects.all()
     if request.method == 'POST':
         doc = request.POST
@@ -237,6 +304,17 @@ def knowledge(request):
 @login_required(login_url='login')
 def userprofiles(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["data"] = Profile.objects.all()
     
     return render(request, "User/settings/userprofiles.html", context)
@@ -245,6 +323,17 @@ def userprofiles(request):
 @login_required(login_url='login')
 def adduser(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
 
 
     if request.method == 'POST':
@@ -294,6 +383,17 @@ def adduser(request):
 @login_required(login_url='login')
 def edituserprofile(request, id):
     context ={}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
 
     obj = get_object_or_404(Profile, id = id)
 
@@ -334,6 +434,17 @@ def getUserRegisteredId(id):
 @login_required(login_url='login')
 def profile(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
  
     dataqr = get_object_or_404(Profile, userid = request.user.id)
     context["data"] = dataqr
@@ -344,6 +455,17 @@ def profile(request):
 @login_required(login_url='login')
 def editprofile(request):
     context ={}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
 
     obj = get_object_or_404(Profile, userid = request.user.id)
     form = ProfileForm(request.POST or None, request.FILES or None, instance = obj)
@@ -400,6 +522,17 @@ def deleteuser(request, id):
 @login_required(login_url='login')
 def sales(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["data"] = Sales.objects.all()
     return render(request, "User/sales/sales.html", context)
 
@@ -408,6 +541,17 @@ def sales(request):
 @login_required(login_url='login')
 def editsale(request, id):
     context ={}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["qdata"] = Quotations.objects.all()
     context["deliveryboydata"] = Deliveryboy.objects.all()
   
@@ -428,6 +572,17 @@ def editsale(request, id):
 @login_required(login_url='login')
 def addsale(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["qdata"] = Quotations.objects.all()
     context["deliveryboydata"] = Deliveryboy.objects.all()
 
@@ -469,6 +624,17 @@ def deletesale(request, id):
 @login_required(login_url='login')
 def lead(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["data"] = Lead.objects.all()
 
     return render(request, "User/lead/lead.html", context)
@@ -476,6 +642,17 @@ def lead(request):
 @login_required(login_url='login')
 def editlead(request, id):
     context ={}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
   
     obj = get_object_or_404(Lead, id = id)
     form = LeadForm(request.POST or None, instance = obj)
@@ -496,6 +673,17 @@ def editlead(request, id):
 @login_required(login_url='login')
 def addlead(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     form = LeadForm(request.POST or None)
     if form.is_valid():
         form.save()
@@ -532,6 +720,17 @@ def deletelead(request, id):
 @login_required(login_url='login')
 def products(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["data"] = Product.objects.all()
     return render(request, "User/product/products.html", context)
 
@@ -539,6 +738,17 @@ def products(request):
 @login_required(login_url='login')
 def addproduct(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
   
@@ -554,7 +764,7 @@ def addproduct(request):
             print(form.errors)
 
 
-    return render(request, "User/product/addproduct.html", {})
+    return render(request, "User/product/addproduct.html", context)
 
 @login_required(login_url='login')
 def deleteproduct(request, id):
@@ -575,6 +785,17 @@ def deleteproduct(request, id):
 @login_required(login_url='login')
 def editproduct(request, id):
     context ={}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     obj = get_object_or_404(Product, id = id)
     form = ProductForm(request.POST or None , request.FILES or None, instance=obj)
     if form.is_valid():
@@ -607,6 +828,17 @@ def editproduct(request, id):
 @login_required(login_url='login')
 def contact(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["data"] = Contact.objects.all()
     return render(request, "User/contact/contact.html", context)
 
@@ -619,6 +851,17 @@ def contact(request):
 @login_required(login_url='login')
 def addcontact(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     
     if request.method == 'POST':
         form = ContactForm(request.POST, request.FILES)
@@ -649,6 +892,17 @@ def deletecontact(request, id):
 @login_required(login_url='login')
 def editcontact(request, id):
     context ={}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     obj = get_object_or_404(Contact, id = id)
     form = ContactForm(request.POST or None , request.FILES or None, instance=obj)
     if form.is_valid():
@@ -667,6 +921,17 @@ def editcontact(request, id):
 @login_required(login_url='login')
 def contactqrcode(request, id):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     dataqr = get_object_or_404(Contact, id = id)
 
     context["data"] = "Person Name : "+str(dataqr.full_name)+"\nPerson Email : "+str(dataqr.user_email)+"\nPerson Phone : "+str(dataqr.user_phone)+"\nCompany Name : "+str(dataqr.company_name)+"\nCompany Location : "+str(dataqr.company_location)
@@ -688,6 +953,17 @@ def contactqrcode(request, id):
 @login_required(login_url='login')
 def tasks(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["data"] = Task.objects.filter(addedby=request.user.id).all()
     ttl = Task.objects.filter(addedby=request.user.id).count()
     if(ttl):
@@ -735,6 +1011,17 @@ def tasks(request):
 @login_required(login_url='login')
 def addtask(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     arr = ["Active", "Completed", "Pending", "Inactive"]
     context["opt"] = arr
     if request.method == 'POST':
@@ -768,6 +1055,17 @@ def deletetask(request, id):
 @login_required(login_url='login')
 def edittask(request, id):
     context ={}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     arr = ["Active", "Completed", "Pending", "Inactive"]
     context["opt"] = arr
     obj = get_object_or_404(Task, id = id)
@@ -810,6 +1108,17 @@ def edittask(request, id):
 @login_required(login_url='login')
 def contracts(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["data"] = Contract.objects.all()
     return render(request, "User/contract/contracts.html", context)
 
@@ -817,6 +1126,17 @@ def contracts(request):
 @login_required(login_url='login')
 def addcontract(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["customersdata"] = Contact.objects.all()
     if request.method == 'POST':
         form = ContractForm(request.POST, request.FILES)
@@ -846,6 +1166,17 @@ def deletecontract(request, id):
 @login_required(login_url='login')
 def editcontract(request, id):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["customersdata"] = Contact.objects.all()
     obj = get_object_or_404(Contract, id = id)
     form = ContractForm(request.POST or None , request.FILES or None, instance=obj)
@@ -877,6 +1208,17 @@ def editcontract(request, id):
 @login_required(login_url='login')
 def deliveryboy(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["data"] = Deliveryboy.objects.all()
     return render(request, "User/deliveryboy/deliveryboy.html", context)
 
@@ -884,7 +1226,18 @@ def deliveryboy(request):
 @login_required(login_url='login')
 def adddeliveryboy(request):
     context = {}
-    # context["customersdata"] = Contact.objects.all()
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
+    
     if request.method == 'POST':
         form = DeliveryboyForm(request.POST, request.FILES)
         if form.is_valid():
@@ -919,6 +1272,17 @@ def deletedeliveryboy(request, id):
 @login_required(login_url='login')
 def editdeliveryboy(request, id):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["deliveryboydata"] = Deliveryboy.objects.all()
     obj = get_object_or_404(Deliveryboy, id = id)
     form = DeliveryboyForm(request.POST or None , request.FILES or None, instance=obj)
@@ -948,6 +1312,17 @@ def editdeliveryboy(request, id):
 @login_required(login_url='login')
 def calander(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
 
 
     if request.method == 'POST':
@@ -983,12 +1358,34 @@ def calander(request):
 @login_required(login_url='login')
 def quotation(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["data"] = Quotations.objects.all()
     return render(request, "User/quotation/quotation.html", context)
 
 @login_required(login_url='login')
 def addquotation(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["customers"] = Contact.objects.all()
     context["products"] = Product.objects.all()
 
@@ -1057,6 +1454,17 @@ def deletequotation(request, id):
 @login_required(login_url='login')
 def viewquotation(request, id):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["quot"] = get_object_or_404(Quotations, id=id)
     context["quotitems"] = Quoteitem.objects.filter(quotation_id_id=id).all()
     return render(request, "User/quotation/viewquotation.html", context)
@@ -1065,6 +1473,17 @@ def viewquotation(request, id):
 @login_required(login_url='login')
 def leave(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["data"] = Leave.objects.filter(addedby=request.user.id).all()
 
     if request.method == 'POST':
@@ -1088,6 +1507,17 @@ def leave(request):
 @login_required(login_url='login')
 def editleave(request, id):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     obj = get_object_or_404(Leave, id = id)
     context["leavedata"] = obj
     if request.method == "POST":
@@ -1121,6 +1551,17 @@ def deleteleave(request, id):
 @login_required(login_url='login')
 def manageleave(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["data"] = Leave.objects.all()
     return render(request, "User/leave/manageleave.html", context)
 
@@ -1149,6 +1590,17 @@ def acceptleave(request, id):
 @login_required(login_url='login')
 def claim(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["data"] = Claim.objects.filter(addedby=request.user.id).all()
 
     if request.method == 'POST':
@@ -1185,6 +1637,17 @@ def deleteclaim(request, id):
 @login_required(login_url='login')
 def editclaim(request, id):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     obj = get_object_or_404(Claim, id = id)
     context["claimdata"] = obj
     if request.method == "POST":
@@ -1208,6 +1671,17 @@ def editclaim(request, id):
 @login_required(login_url='login')
 def manageclaim(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     context["data"] = Claim.objects.all()
     return render(request, "User/claim/manageclaim.html", context)
 
@@ -1242,6 +1716,17 @@ def acceptclaim(request, id):
 @login_required(login_url='login')
 def chat(request):
     context = {}
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    context["ip_address"] = ip
+
+
+    context["eventdata"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).all()
+    context["eventcount"] = Events.objects.filter(addedby=request.user.id, eventdate=date.today()).count()
     # context["data"] = Leave.objects.all()
     return render(request, "Chats/chat.html", context)
 

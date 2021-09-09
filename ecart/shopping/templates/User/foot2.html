@@ -12,9 +12,9 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/v/bs/jq-3.3.1/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.js"></script>
 
 
-
-	
-
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'vendor/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
+	<script src="{% static 'scripts/klorofil-common.js' %}"></script>
 
 
 
@@ -59,11 +59,6 @@
 
 
 
-
-
-<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-<script src="{% static 'vendor/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
-<script src="{% static 'scripts/klorofil-common.js' %}"></script>
 
 
 {% if request.get_full_path == "/tasks" %}

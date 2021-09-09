@@ -73,7 +73,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Task Details</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Event Details</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -83,9 +83,9 @@
             
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-            <div class="row">
+            <div class="row" style="padding: 10px;">
             
-                <div class="col-sm">
+                <div class="col-sm p-2">
                     <input type="hidden" name="addedby" value="{{ request.user.id }}">
                     <hr>
                         <div class="form-group">
@@ -110,8 +110,8 @@
             
             
             </div>
-            <div class="row justify-content-end">
-                <button type="submit" class="btn btn-secondary m-1">SAVE</button>
+            <div class="form-group justify-content-end">
+                <button type="submit" class="btn btn-primary m-1">SAVE</button>
             </div>
             <br>
         </form>
@@ -137,7 +137,6 @@
             <p><b>Title :</b> <span id="title_show"></span></p>
             <p><b>Date :</b> <span id="date_show"></span></p>
             <p><b>Description :</b> <span id="description_show"></span></p>
-
         </div>
       </div>
     </div>
