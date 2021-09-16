@@ -16,6 +16,47 @@
 	<script src="{% static 'vendor/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
 	<script src="{% static 'scripts/klorofil-common.js' %}"></script>
 
+	<script type="text/javascript">		
+		function maxWindow() {
+			if ((document.fullScreenElement && document.fullScreenElement !== null) || (!document.mozFullScreen && !document.webkitIsFullScreen))
+			{
+				if (document.documentElement.requestFullScreen){
+					document.documentElement.requestFullScreen();
+				}
+				else if (document.documentElement.mozRequestFullScreen){ /* Firefox */
+					document.documentElement.mozRequestFullScreen();
+				}
+				else if (document.documentElement.webkitRequestFullScreen){   /* Chrome, Safari & Opera */
+					document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+				}
+				else if (document.msRequestFullscreen){ /* IE/Edge */
+					document.documentElement.msRequestFullscreen();
+				}
+
+				document.getElementById('togglescreen').classList.remove('fa-expand');
+				document.getElementById('togglescreen').classList.add('fa-compress');
+			}
+			else
+			{
+				if (document.cancelFullScreen){
+					document.cancelFullScreen();
+				}
+				else if (document.mozCancelFullScreen){ /* Firefox */
+					document.mozCancelFullScreen();
+				}
+				else if (document.webkitCancelFullScreen){   /* Chrome, Safari and Opera */
+					document.webkitCancelFullScreen();
+				}
+				else if (document.msExitFullscreen){ /* IE/Edge */
+					document.msExitFullscreen();
+				}
+				document.getElementById('togglescreen').classList.remove('fa-compress');
+				document.getElementById('togglescreen').classList.add('fa-expand');
+				
+			}
+		}
+	</script> 
+
 
 
     <script>

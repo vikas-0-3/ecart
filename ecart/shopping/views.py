@@ -44,6 +44,7 @@ def loginuser(request):
     if request.user.is_authenticated:
         return redirect('home')
     else:
+        context = {}
         if request.method == 'POST':
             username = request.POST.get('username')
             password = request.POST.get('password')
@@ -58,9 +59,8 @@ def loginuser(request):
                 
                 return redirect('home')
             else:
-                messages.info(request, 'Username or password is incorrect')
-                print(user.errors)
-        return render(request, "login.html", {})
+                context["message"] = "Username or Password is incorrect"
+        return render(request, "login.html", context)
 
 def logoutuser(request):
     user = User.objects.get(id=request.user.id)
@@ -143,6 +143,7 @@ def email(request):
         email_from = settings.EMAIL_HOST_USER
         recipient_list = [to, ]
         send_mail( subject, message, email_from, recipient_list )
+        context["message"] = "Email is sent to {}".format(to)
 
     
     return render(request, "User/email/email.html", context)
