@@ -29,13 +29,13 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-sm">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="vendor">Vendor</label>
                                                 <input type="text" class="form-control" name="vendor"  id="vendor" placeholder="vendor details" value="{{data.vendor.value}}" >
                                           </div>
                                     </div>
-                                    <div class="col-sm">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="vendor_price">Vendor Price</label>
                                             <input type="number" class="form-control" name="vendor_price"  id="vendor_price" placeholder="Vendor Price" value="{{data.vendor_price.value}}" onchange="calcprofit()" >
@@ -44,7 +44,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-sm">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="payment_mode">Payment Mode</label>
                                             <select class="form-control form-control-lg" name="payment_mode" id="payment_mode">
@@ -56,7 +56,7 @@
                                             </select>                                        
                                         </div>
                                     </div>
-                                    <div class="col-sm">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="our_price">Our Price</label>
                                             <input type="text" class="form-control" name="our_price" id="our_price" placeholder="our price" value="{{data.our_price.value}}" readonly>
@@ -65,7 +65,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-sm">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="payment_status">Payment Status</label>
                                             <select class="form-control form-control-lg" name="payment_status" id="payment_status">
@@ -74,7 +74,7 @@
                                             </select> 
                                         </div>
                                     </div>
-                                    <div class="col-sm">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="profit">Profit</label>
                                             <input type="number" class="form-control" name="profit" value="{{data.profit.value}}" id="profit" placeholder="profit" readonly>
@@ -91,13 +91,13 @@
                                     </select>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="order_date">Order Date</label>
                                             <input type="date" class="form-control" name="order_date" id="order_date" >
                                         </div>
                                     </div>
-                                    <div class="col-sm">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="delivery_date">Delivery Date</label>
                                             <input type="date" class="form-control" name="delivery_date" id="delivery_date" >
@@ -115,7 +115,6 @@
                     </div>
                     <div class="row justify-content-end">
                         <button type="submit" class="btn btn-secondary m-1">SAVE</button>
-                        <button type="button" class="btn btn-secondary m-1">SAVE AND CREATE CONTACT</button>
                     </div>
                     <br>
                 </form>

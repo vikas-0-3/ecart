@@ -7,7 +7,7 @@
     <!-- MAIN CONTENT -->
     <div class="main-content">
         <div class="container-fluid">
-            <h3 class="page-title">Update Profile</h3>
+            <h3 class="page-title">Add User</h3>
          
             <form method = "post" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -25,33 +25,33 @@
                             <input type="file" class="form-control" name="user_image" >
                             <br>
                             <div class="row">
-                                <div class="col-sm">
+                                <div class="col-sm-6">
                                     <label for="first_name">First Name</label>
                                     <input type="text" class="form-control" name="first_name" value="{{ data.first_name.value }}" placeholder="First Name">
                                 </div>
-                                <div class="col-sm">
+                                <div class="col-sm-6">
                                     <label for="last_name">Last Name</label>
                                     <input type="text" class="form-control" name="last_name" value="{{ data.last_name.value }}" placeholder="Last Name">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-sm">
+                                <div class="col-sm-6">
                                     <label for="user_email">Email</label>
                                     <input type="email" class="form-control" name="user_email" value="{{ data.user_email.value }}" placeholder="Email">
                                 </div>
-                                <div class="col-sm">
+                                <div class="col-sm-6">
                                     <label for="user_phone">Phone</label>
                                     <input type="phone" class="form-control" name="user_phone" id="user_phone"  value="{{ data.user_phone.value }}" placeholder="Phone">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-sm">
+                                <div class="col-sm-6">
                                     <label for="dob">Date of Birth</label>
                                     <input type="date" class="form-control" name="dob" id="dob">
                                 </div>
-                                <div class="col-sm">
+                                <div class="col-sm-6">
                                     <label for="gender">Gender</label>
                                     <select class="form-control form-control-lg" name="gender">
                                         <option value="Male" {% if data.gender.value == "Male" %} selected {% endif %} >Male</option>
@@ -80,22 +80,22 @@
                         <div class="panel-body">
                         
                             <div class="row">
-                                <div class="col-sm">
+                                <div class="col-sm-6">
                                     <label for="points">Points</label>
                                     <input type="number" class="form-control" name="points" value="{{ data.points.value }}" placeholder="Points" {% if request.user.is_staff == "0" %} readonly {% endif %}>
                                 </div>
-                                <div class="col-sm">
+                                <div class="col-sm-6">
                                     <label for="designation">Designation</label>
                                     <input type="text" class="form-control" name="designation" value="{{ data.designation.value }}" placeholder="Designation" {% if request.user.is_staff == "0" %} readonly {% endif %}>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-sm">
+                                <div class="col-sm-6">
                                     <label for="working_from">Working From</label>
                                     <input type="time" class="form-control" name="working_from" id="working_from" {% if request.user.is_staff == "0" %} readonly {% endif %}>
                                 </div>
-                                <div class="col-sm">
+                                <div class="col-sm-6">
                                     <label for="working_to">Working To</label>
                                     <input type="time" class="form-control" name="working_to" id="working_to" value="{{ data.working_to.value }}" placeholder="Designation" {% if request.user.is_staff == "0" %} readonly {% endif %}>
                                 </div>
@@ -143,8 +143,8 @@
                             <textarea type="text" class="form-control" name="about" placeholder="Describe Yourself" rows="4">{{ data.about.value }}</textarea>
                         </div>
                   
-                        <div class="row justify-content-end mr-2 p-2">
-                            <button type="submit" class="btn btn-secondary m-1 mr-4">SAVE</button>
+                        <div class="row text-right">
+                            <button type="submit" class="btn btn-secondary">SAVE</button>
                         </div>
                     </div>
                     

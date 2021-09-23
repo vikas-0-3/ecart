@@ -12,7 +12,7 @@
                         {% csrf_token %}
                     <div class="row">
                     
-                        <div class="col-sm">
+                        <div class="col-md-6">
                             <h5>Company Details</h5>
                             <hr>
                                 <div class="form-group">
@@ -39,7 +39,7 @@
                                 <h5 class="m-2">Address Details</h5>
                                 <hr>
                                 <div class="row">
-                                    <div class="col-sm">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="country">Country</label>
                                             <input type="text" class="form-control" name="country" value="{{ data.country.value }}" id="country" placeholder="Country">
@@ -49,7 +49,7 @@
                                             <input type="text" class="form-control" name="city" value="{{ data.city.value }}" id="city" placeholder="City">
                                         </div>
                                     </div>
-                                    <div class="col-sm">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="state">State</label>
                                             <input type="text" class="form-control" name="state" value="{{ data.state.value }}" id="state" placeholder="State">
@@ -61,7 +61,7 @@
                                     </div>
                                 </div>
                         </div>
-                        <div class="col-sm">
+                        <div class="col-md-6">
                             <h5>Lead Details</h5>
                             <hr>
                                 <div class="form-group">
@@ -87,9 +87,8 @@
                         </div>
                     
                     </div>
-                    <div class="row justify-content-end">
-                        <button type="submit" class="btn btn-secondary m-1">SAVE</button>
-                        <button type="button" class="btn btn-secondary m-1">SAVE AND CREATE CONTACT</button>
+                    <div class="row">
+                        <button type="submit" class="btn btn-secondary ">SAVE</button>
                     </div>
                     <br>
                 </form>

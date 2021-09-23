@@ -12,7 +12,7 @@
                         {% csrf_token %}
                     <div class="row">
                     
-                        <div class="col-sm">
+                        <div class="col-sm-6">
                             <h5>Company Details</h5>
                             <hr>
                             <input type="hidden" name="addedby" value="{{ request.user.id }}">
@@ -40,7 +40,7 @@
                                 <h5 class="m-2">Address Details</h5>
                                 <hr>
                                 <div class="row">
-                                    <div class="col-sm">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="country">Country</label>
                                             <input type="text" class="form-control" name="country" id="country" placeholder="Country">
@@ -50,7 +50,7 @@
                                             <input type="text" class="form-control" name="city" id="city" placeholder="City">
                                         </div>
                                     </div>
-                                    <div class="col-sm">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="state">State</label>
                                             <input type="text" class="form-control" name="state" id="state" placeholder="State">
@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
                         </div>
-                        <div class="col-sm">
+                        <div class="col-sm-6">
                             <h5>Lead Details</h5>
                             <hr>
                                 <div class="form-group">
