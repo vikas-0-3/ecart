@@ -71,7 +71,7 @@
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-expand-lg navbar-fixed-top">
 			<div class="brand">
-				<a href="home"><img src="{% static 'images/img/mylogo.png' %}" width="70" alt="shopholic Logo" class="img-responsive logo"></a>
+				<a href="/home"><img src="{% static 'images/img/mylogo.png' %}" width="70" alt="shopholic Logo" class="img-responsive logo"></a>
 			</div>
 			<div class="container-fluid">
 				<div class="navbar-btn">
@@ -107,9 +107,9 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="{% static 'images/img/user.png' %}" class="img-circle" alt="Avatar"> <span>{{ user.get_username }}</span>&ensp;</a>
 							<ul class="dropdown-menu">
-								<li><a href="profile"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
-								<li><a href="email"><i class="lnr lnr-envelope"></i> <span>Email</span></a></li>
-								<li><a href="logout"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
+								<li><a href="/profile"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
+								<li><a href="/email"><i class="lnr lnr-envelope"></i> <span>Email</span></a></li>
+								<li><a href="/logout"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
 							</ul>
 						</li>
 					</ul>
@@ -122,14 +122,14 @@
 			<div class="sidebar-scroll">
 				<nav>
 					<ul class="nav">
-						<li><a href="home" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+						<li><a href="/home" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
 						
-						<li><a href="calander" class=""><i class="lnr lnr-linearicons"></i> <span>Calander</span></a></li>
+						<li><a href="/calander" class=""><i class="lnr lnr-linearicons"></i> <span>Calander</span></a></li>
 						{% if perms.shopping.view_contact %}
-						<li><a href="contact" class=""><i class="lnr lnr-linearicons"></i> <span>Contacts</span></a></li>
+						<li><a href="/contact" class=""><i class="lnr lnr-linearicons"></i> <span>Contacts</span></a></li>
 						{% endif %}
 						{% if perms.shopping.view_contract %}
-						<li><a href="contracts" class=""><i class="lnr lnr-file-empty"></i> <span>Contracts</span></a></li>
+						<li><a href="/contracts" class=""><i class="lnr lnr-file-empty"></i> <span>Contracts</span></a></li>
 						{% endif %}
 
 						{% if perms.shopping.view_documents %}
@@ -137,22 +137,22 @@
 							<a href="#subPages2" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Documents</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages2" class="collapse ">
 								<ul class="nav">
-									<li><a href="documents" class=""><span>Documents</span></a></li>
-									<li><a href="knowledge" class=""><span>Knowledge Base</span></a></li>
+									<li><a href="/documents" class=""><span>Documents</span></a></li>
+									<li><a href="/knowledge" class=""><span>Knowledge Base</span></a></li>
 								</ul>
 							</div>
 						</li>
 						{% endif %}
 
-						<li><a href="lead" class=""><i class="lnr lnr-chart-bars"></i> <span>Leads</span></a></li>
+						<li><a href="/lead" class=""><i class="lnr lnr-chart-bars"></i> <span>Leads</span></a></li>
 					
 						<li>
 							<a href="#subPages3" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Leaves</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages3" class="collapse ">
 								<ul class="nav">
-									<li><a href="leave" class=""><span>Leaves</span></a></li>
+									<li><a href="/leave" class=""><span>Leaves</span></a></li>
 									{% if perms.shopping.manage_leave %}
-									<li><a href="manageleave" class=""><span>Manage Leaves</span></a></li>
+									<li><a href="/manageleave" class=""><span>Manage Leaves</span></a></li>
 									{% endif %}
 								</ul>
 							</div>
@@ -163,31 +163,31 @@
 							<a href="#subPages4" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Claim</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages4" class="collapse ">
 								<ul class="nav">
-									<li><a href="claim" class=""><span>Claim</span></a></li>
+									<li><a href="/claim" class=""><span>Claim</span></a></li>
 									{% if perms.shopping.manage_leave %}
-									<li><a href="manageclaim" class=""><span>Manage Claim</span></a></li>
+									<li><a href="/manageclaim" class=""><span>Manage Claim</span></a></li>
 									{% endif %}
 								</ul>
 							</div>
 						</li>
 
 
-						<li><a href="products" class=""><i class="lnr lnr-text-format"></i> <span>Products</span></a></li>
-						<li><a href="quotation" class=""><i class="lnr lnr-dice"></i> <span>Quotations</span></a></li>
-						<li><a href="sales" class=""><i class="lnr lnr-dice"></i> <span>Sales</span>&emsp;</a></li>
-						<li><a href="tasks"><i class="lnr lnr-alarm"></i> <span>Tasks</span></a></li>
+						<li><a href="/products" class=""><i class="lnr lnr-text-format"></i> <span>Products</span></a></li>
+						<li><a href="/quotation" class=""><i class="lnr lnr-dice"></i> <span>Quotations</span></a></li>
+						<li><a href="/sales" class=""><i class="lnr lnr-dice"></i> <span>Sales</span>&emsp;</a></li>
+						<li><a href="/tasks"><i class="lnr lnr-alarm"></i> <span>Tasks</span></a></li>
 						
 						
 						<li>
 							<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-cog"></i> <span>Settings</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages" class="collapse ">
 								<ul class="nav">
-									<li><a href="deliveryboy" class="">Delivery Boy</a></li>
+									<li><a href="/deliveryboy" class="">Delivery Boy</a></li>
 									{% if request.user.is_staff %}
-									<li><a href="userprofiles" class="">Users</a></li>
+									<li><a href="/userprofiles" class="">Users</a></li>
 									{% endif %}
 									<!-- <li><a href="page-login" class="">Login</a></li> --> 
-									<li><a href="socialhandle" class="">Social Handle</a></li>
+									<li><a href="/socialhandle" class="">Social Handle</a></li>
 								</ul>
 							</div>
 						</li>

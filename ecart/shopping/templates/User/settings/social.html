@@ -7,44 +7,52 @@
     <div class="main-content">
         <div class="container-fluid card" style="background-color: white;">
             <h3 class="bg-light p-2">Social Handle Links</h3>
-            
-                <div class="container-fluid">
-                    <form method="post">
-                        {% csrf_token %}
+
+            <div class="container-fluid">
+                <form method="post">
+                    {% csrf_token %}
                     <div class="row">
-                    
+
                         <div class="col-sm">
 
 
                             {% for sdata in socialdata %}
 
                             <div class="row">
-                                <div class="col-sm m-2">
-                                    <img src="media/facebook.png" class="img img-responsive" style="width: 300px; height:250px;" />
+                                <div class="col-sm-3 m-2">
+                                    <img src="media/facebook.png" class="img img-responsive"
+                                        style="width: 300px; height:250px;" />
                                     <div class="form-group">
                                         <label for="facebook">Facebook</label>
-                                        <input type="text" class="form-control" name="facebook"  id="facebook" value="{{ sdata.facebook }}" placeholder="Facebook">
+                                        <input type="text" class="form-control" name="facebook" id="facebook"
+                                            value="{{ sdata.facebook }}" placeholder="Facebook">
                                     </div>
                                 </div>
-                                <div class="col-sm m-2">
-                                    <img src="media/instagram.png" class="img img-responsive" style="width: 300px; height:250px;" />
+                                <div class="col-sm-3 m-2">
+                                    <img src="media/instagram.png" class="img img-responsive"
+                                        style="width: 300px; height:250px;" />
                                     <div class="form-group">
                                         <label for="instagram">Instagram</label>
-                                        <input type="text" class="form-control" name="instagram" id="instagram" value="{{ sdata.instagram }}" placeholder="Instagram">
+                                        <input type="text" class="form-control" name="instagram" id="instagram"
+                                            value="{{ sdata.instagram }}" placeholder="Instagram">
                                     </div>
                                 </div>
-                                <div class="col-sm m-2">
-                                    <img src="media/linkedin.png" class="img img-responsive" style="width: 300px; height:250px;" />
+                                <div class="col-sm-3 m-2">
+                                    <img src="media/linkedin.png" class="img img-responsive"
+                                        style="width: 300px; height:250px;" />
                                     <div class="form-group">
                                         <label for="linkedin">Linked In</label>
-                                        <input type="text" class="form-control" name="linkedin" id="linkedin" value="{{ sdata.linkedin }}" placeholder="Linked in">
+                                        <input type="text" class="form-control" name="linkedin" id="linkedin"
+                                            value="{{ sdata.linkedin }}" placeholder="Linked in">
                                     </div>
                                 </div>
-                                <div class="col-sm m-2">
-                                    <img src="media/twitter.png" class="img img-responsive" style="width: 300px; height:250px;" />
+                                <div class="col-sm-3 m-2">
+                                    <img src="media/twitter.png" class="img img-responsive"
+                                        style="width: 300px; height:250px;" />
                                     <div class="form-group">
                                         <label for="twitter">Twitter</label>
-                                        <input type="text" class="form-control" name="twitter" id="twitter" value="{{ sdata.twitter }}" placeholder="Twitter">
+                                        <input type="text" class="form-control" name="twitter" id="twitter"
+                                            value="{{ sdata.twitter }}" placeholder="Twitter">
                                     </div>
                                 </div>
                             </div>
@@ -52,59 +60,59 @@
 
 
                             <div class="row">
-                                <div class="col-sm m-2">
-                                    <img src="media/github.png" class="img img-responsive" style="width: 300px; height:250px;" />
+                                <div class="col-sm-3 m-2">
+                                    <img src="media/github.png" class="img img-responsive"
+                                        style="width: 300px; height:250px;" />
                                     <div class="form-group">
                                         <label for="github">Github</label>
-                                        <input type="text" class="form-control" name="github"  id="github" value="{{ sdata.github }}" placeholder="Github">
+                                        <input type="text" class="form-control" name="github" id="github"
+                                            value="{{ sdata.github }}" placeholder="Github">
                                     </div>
                                 </div>
-                                <div class="col-sm m-2">
-                                    <img src="media/www.png" class="img img-responsive" style="width: 300px; height:250px;" />
+                                <div class="col-sm-3 m-2">
+                                    <img src="media/www.png" class="img img-responsive"
+                                        style="width: 300px; height:250px;" />
                                     <div class="form-group">
                                         <label for="website">Website</label>
-                                        <input type="text" class="form-control" name="website" id="website" value="{{ sdata.website }}" placeholder="Website">
+                                        <input type="text" class="form-control" name="website" id="website"
+                                            value="{{ sdata.website }}" placeholder="Website">
                                     </div>
                                 </div>
-                                <div class="col-sm m-2">
-                                    <img src="media/gmail.png" class="img img-responsive" style="width: 300px; height:250px;" />
+                                <div class="col-sm-3 m-2">
+                                    <img src="media/gmail.png" class="img img-responsive"
+                                        style="width: 300px; height:250px;" />
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input type="text" class="form-control" name="email" id="email" value="{{ sdata.email }}" placeholder="Email">
+                                        <input type="text" class="form-control" name="email" id="email"
+                                            value="{{ sdata.email }}" placeholder="Email">
                                     </div>
                                 </div>
-                                <div class="col-sm m-2">
-                                    <img src="media/whatsapp.png" class="img img-responsive" style="width: 300px; height:250px;" />
+                                <div class="col-sm-3 m-2">
+                                    <img src="media/whatsapp.png" class="img img-responsive"
+                                        style="width: 300px; height:250px;" />
                                     <div class="form-group">
                                         <label for="phone">Phone</label>
-                                        <input type="text" class="form-control" name="phone" id="phone" value="{{ sdata.phone }}" placeholder="Phone">
+                                        <input type="text" class="form-control" name="phone" id="phone"
+                                            value="{{ sdata.phone }}" placeholder="Phone">
                                     </div>
                                 </div>
                             </div>
-                                
-                        
+
+
                             {% endfor %}
-                                
-                                
-                                
 
 
-                                
-                                
-                                
-                                
-                                
-                                
+
                         </div>
-                    
-                    
+
+
                     </div>
                     <div class="row justify-content-end">
                         <button type="submit" class="btn btn-secondary m-1">SAVE</button>
                     </div>
                     <br>
                 </form>
-                </div>
+            </div>
         </div>
     </div>
 </div>

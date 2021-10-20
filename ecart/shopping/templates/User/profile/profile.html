@@ -81,7 +81,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade in active" id="tab-bottom-left1">
                                     <div class="row">
-                                        <div class="col-sm">
+                                        <div class="col-sm-6">
                                             <ul class="list-unstyled activity-timeline">
                                                 <li>
                                                     <i class="fa fa-comment activity-icon"></i>
@@ -101,12 +101,14 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div class="col-sm">
+                                        <div class="col-sm-6">
                                             <div class="col-6 text-center justify-content-center" id="myqrdiv">
                                                 {% qr_from_text profileqr size="5" image_format="png" error_correction="L" %}
 
                                             </div>
-                                            <a href="#" id="downloadbtn" class="btn btn-sm btn-primary float-right" download>Download</a>
+                                            <div class="text-right">
+                                                <a href="#" id="downloadbtn" class="btn btn-sm btn-primary" download>Download</a>
+                                            </div>
                                         </div>
                                     </div>
                                     
